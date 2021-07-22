@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.notice.NoticeDAOInter"> 
+  <insert id="create" parameterType="dev.mvc.notice.NoticeVO">
+    INSERT INTO notice(nnum, ntitle, ncontent, cnt, word, rdate, nimage, nimagesaved, nsize)
+    VALUES(notice_seq.nextval, #{ntitle}, #{ncontent}, #{cnt}, #{word}, sysdate, #{nimage}, #{nimagesaved}, #{nsize});
+  </insert>
+
+
+  <select id="list" resultType="dev.mvc.notice.NoticeVO" parameterType="int">
+    SELECT nnum, ntitle, rdate, cnt, ADMINNO
+    FROM notice
+    ORDER BY nnum DESC
+  </select> 
+  
+  <select id="read" resultType="dev.mvc.notice.NoticeVO" parameterType="int">
+    SELECT nnum, ntitle, ncontent, cnt, word, rdate, nimage, nimagesaved, nsize
+    FROM notice
+    WHERE nnum=#{nnum}
+  </select>
+</mapper> 

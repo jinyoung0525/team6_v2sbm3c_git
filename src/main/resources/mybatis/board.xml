@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.board.BoardDAOInter"> 
+  <insert id="create" parameterType="dev.mvc.board.BoardVO">
+        INSERT INTO board(bnum, btitle, bcontent, passwd, word, 
+                                            rdate, image, imagesaved, size, MEMBERNO)
+        VALUES(board_seq.nextval, #{btitle}, #{bcontent}, #{passwd}, #{word}, 
+                                            sysdate, #{image}, #{imagesaved}, #{size}, #{MEMBERNO})
+
+  </insert>
+
+
+  <select id="list" resultType="dev.mvc.board.BoardVO" parameterType="int">
+    SELECT bnum, btitle, rdate, cnt, MEMBERNO
+    FROM board
+    ORDER BY bnum DESC
+  
+  </select>
+  
+  <select id="read" resultType="dev.mvc.board.BoardVO" parameterType="int">
+    SELECT bnum, btitle, bcontent, passwd, recom, cnt, replycnt, word, rdate, image, imagesaved, size, MEMBERNO
+    FROM board
+    WHERE bnum=#{bnum}
+  </select>
+         
+</mapper> 
