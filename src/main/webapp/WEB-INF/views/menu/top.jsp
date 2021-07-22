@@ -9,6 +9,7 @@
     <NAV class='top_menu'>
       <span style='padding-left: 0.5%;'></span>
       <A class='menu_link'  href='/' >홈</A><span class='top_menu_sep'> </span> 
+      <A class='menu_link'  href='/artist/list_by_artistno_grid.do'>아티스트</A><span class='top_menu_sep'> </span>
       
       <c:choose>
         <c:when test="${sessionScope.id == null}"> <%-- 로그인 안 한 경 우 --%>
