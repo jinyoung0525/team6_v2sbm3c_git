@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.artist.ArtistDAOInter"> 
+  <insert id="create" parameterType="dev.mvc.artist.ArtistVO">
+    <selectKey keyProperty="artistno" resultType="int" order="BEFORE">
+      SELECT artist_seq.nextval FROM dual
+    </selectKey>
+    
+     INSERT INTO artist(artistno, name, debut, seqno, genre, nation, type, fname, fupname, thumb, fsize, word)
+     VALUES(#{artistno}, #{name}, #{debut}, #{seqno}, #{genre}, #{nation}, #{type}, #{fname}, #{fupname}, #{thumb}, #{fsize}, #{word})
+  </insert>
+  
+  <select id = "list_by_artistno"  resultType="dev.mvc.artist.ArtistVO">
+    SELECT artistno, name, fan, debut, seqno, genre, nation, type, fname, fupname, thumb, fsize, word
+    FROM artist
+    ORDER BY artistno ASC
+  </select>
+  
+  <!-- 카테고리별 검색 목록 -->
+  <select id="list_by_artistno_search" resultType="dev.mvc.artist.ArtistVO" 
+             parameterType="HashMap">
+    SELECT artistno, name, fan, debut, seqno, genre, nation, type, fname, fupname, thumb, fsize
+    FROM artist
+    <choose>
+      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
+        <!-- WHERE artistno=#{artistno} -->
+      </when>
+      <otherwise> <!-- 검색하는 경우 -->
+        WHERE word LIKE '%' || #{word} || '%'
+        OR name LIKE '%' || #{word} || '%' 
+        OR genre LIKE '%' || #{word} || '%'
+        OR nation LIKE '%' || #{word} || '%'
+        OR type LIKE '%' || #{word} || '%'
+                                                     
+      </otherwise>
+    </choose>
+    ORDER BY artistno DESC   
+  </select>
+   
+  <!-- 카테고리별 검색 레코드 갯수 -->
+  <select id="search_count" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt
+    FROM artist
+    <choose>
+      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+       <!--  WHERE artistno=#{artistno} -->
+      </when>
+      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+       WHERE word LIKE '%' || #{word} || '%'
+        OR name LIKE '%' || #{word} || '%' 
+        OR genre LIKE '%' || #{word} || '%'
+        OR nation LIKE '%' || #{word} || '%'
+        OR type LIKE '%' || #{word} || '%'
+      </otherwise>
+    </choose>
+  </select>
+  
+ <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
+  <select id="list_by_artistno_search_paging" 
+             resultType="dev.mvc.artist.ArtistVO" parameterType="HashMap">
+   SELECT artistno, name, fan, debut, seqno, genre, nation, type, fname, fupname, thumb, fsize, r
+   FROM (
+           SELECT artistno, name, fan, debut, seqno, genre, nation, type, fname, fupname, thumb, fsize, rownum as r
+           FROM (
+                     SELECT artistno, name, fan, debut, seqno, genre, nation, type, fname, fupname, thumb, fsize
+                     FROM artist
+                        <choose>
+                          <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
+                             <!-- WHERE artistno=#{artistno} -->
+                          </when>
+                          <otherwise>
+                            WHERE word LIKE '%' || #{word} || '%'
+                            OR name LIKE '%' || #{word} || '%' 
+                            OR genre LIKE '%' || #{word} || '%'
+                            OR nation LIKE '%' || #{word} || '%'
+                            OR type LIKE '%' || #{word} || '%'
+                          </otherwise>
+                        </choose>
+                        ORDER BY artistno DESC
+               )
+    )
+    WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]>
+     
+<!--  1 page: WHERE r >= 1 AND r <= 10; 
+       2 page: WHERE r >= 11 AND r <= 20;
+       3 page: WHERE r >= 21 AND r <= 30; -->
+     
+  </select>
+  
+  <!-- 팬맺기 -->
+  <update id="update_fan" parameterType="int">
+    UPDATE artist
+    SET fan = fan + 1
+    WHERE artistno = #{artistno}
+  </update>
+  
+  <!-- 일반적인 조회 -->
+  <select id="read" resultType="dev.mvc.artist.ArtistVO" parameterType="int">
+    SELECT artistno, name, fan, debut, seqno, genre, nation, type, fname, fupname, thumb, fsize, word
+    FROM artist
+    WHERE artistno = #{artistno}
+  </select>
+  
+  <!-- 수정 -->
+  <update id="update_artist" parameterType="dev.mvc.artist.ArtistVO">
+    UPDATE artist
+    SET name=#{name}, seqno=#{seqno}, debut=#{debut}, genre=#{genre}, nation=#{nation}, 
+      type=#{type}, fname=#{fname}, fupname=#{fupname}, thumb=#{thumb}, fsize=#{fsize}, word=#{word}
+    WHERE artistno = #{artistno}
+  </update>
+  
+  <!-- 삭제 -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM artist
+    WHERE artistno=#{artistno}
+  </delete>
+  
+ </mapper>
