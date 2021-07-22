@@ -31,7 +31,7 @@
   USER ID(pageContext) : ${pageContext.request.userPrincipal.name}<br>
   USER ID(tag) : <sec:authentication property="name"/><br>
   
-  <a href="/logout">Log Out</a> <br>
+  <a href="/admin/logout.do">Log Out</a> <br>
   
   <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>

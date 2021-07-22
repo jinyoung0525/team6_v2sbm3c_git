@@ -22,12 +22,8 @@ System.out.println("-> logout.jsp");
       document.frm.submit();
     </script>
     <!-- 정말로 로그아웃 할 것인지등을 묻는 화면 구성 가능 -->
+    로그아웃되었습니다.
 </form>
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>
 </html>
-
-
-
-
-

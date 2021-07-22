@@ -5,7 +5,7 @@
 <DIV class='container_main'> 
   <%-- 화면 상단 메뉴 --%>
   <DIV class='top_img'>
-    <DIV class='top_menu_label'>Team6</DIV>
+    <DIV class='top_menu_label'>Music</DIV>
     <NAV class='top_menu'>
       <span style='padding-left: 0.5%;'></span>
       <A class='menu_link'  href='/' >홈</A><span class='top_menu_sep'> </span> 
@@ -18,10 +18,10 @@
           ${sessionScope.id } <A class='menu_link'  href='/member/logout.do' >Logout</A><span class='top_menu_sep'> </span>
         </c:otherwise>
       </c:choose>     
-      
+                    
       관리자[
-      <A class='menu_link'  href='/member/list.do'>회원 목록</A><span class='top_menu_sep'> </span>
-      <A href="/admin/admin.do" class="menu_link">로그인</A>
+      <A class='menu_link'  href='/member/list.do'>회원</A><span class='top_menu_sep'> </span>
+      <A href="/admin/admin.do" class="menu_link">관리자만 접속 가능</A>
       <sec:authorize access="isAuthenticated()">
         <span class='top_menu_sep'> </span>
         <a href="/admin/logout.do" class="menu_link">로그아웃</a>
