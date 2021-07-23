@@ -10,6 +10,9 @@
       <span style='padding-left: 0.5%;'></span>
       <A class='menu_link'  href='/' >홈</A><span class='top_menu_sep'> </span> 
       <A class='menu_link'  href='/artist/list_by_artistno_grid.do'>아티스트</A><span class='top_menu_sep'> </span>
+      <A class='menu_link'  href='/album/list_by_artistno_grid.do'>앨범</A><span class='top_menu_sep'> </span>
+      <A class='menu_link'  href='/notice/list.do'>게시판</A><span class='top_menu_sep'> </span>
+      <A class='menu_link'  href='/board/list.do'>공지사항</A><span class='top_menu_sep'> </span>
       
       <c:choose>
         <c:when test="${sessionScope.id == null}"> <%-- 로그인 안 한 경 우 --%>
@@ -21,7 +24,7 @@
       </c:choose>     
                     
       관리자[
-      <A class='menu_link'  href='/member/list.do'>회원</A><span class='top_menu_sep'> </span>
+      <A class='menu_link'  href='/member/list.do'>회원목록</A><span class='top_menu_sep'> </span>
       <A href="/admin/admin.do" class="menu_link">관리자만 접속 가능</A>
       <sec:authorize access="isAuthenticated()">
         <span class='top_menu_sep'> </span>

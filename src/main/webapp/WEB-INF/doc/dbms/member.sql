@@ -11,8 +11,8 @@ CREATE TABLE member(
     zipcode VARCHAR(5), -- 우편번호, 12345
     address1 VARCHAR(80), -- 주소 1
     address2 VARCHAR(50), -- 주소 2
-    mdate DATETIME NOT NULL, -- 가입일    
-    grade INTEGER(2) NOT NULL -- 등급(1 ~ 10: 관리자 / 11~20: 회원 / 30~39: 정지 회원 / 40~49: 탈퇴 회원 / 99: 비회원)
+    mdate DATE NOT NULL, -- 가입일    
+    grade NUMBER(2) NOT NULL -- 등급(1 ~ 10: 관리자 / 11~20: 회원 / 30~39: 정지 회원 / 40~49: 탈퇴 회원 / 99: 비회원)
 );
 
 COMMENT ON TABLE MEMBER is '회원';

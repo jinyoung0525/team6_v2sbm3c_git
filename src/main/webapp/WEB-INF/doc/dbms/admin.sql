@@ -7,8 +7,8 @@ CREATE TABLE admin(
     name VARCHAR(300) NOT NULL,
     password VARCHAR(100) NOT NULL,
     authority VARCHAR(20) NOT NULL, -- 권한, ROLE_ADMIN, ROLE_USER 지정됨 ★
-    enabled INTEGER(10) NOT NULL, -- 사용 여부, 1: 활성, 0: 비활성 지정됨
-    rdate DATETIME NOT NULL
+    enabled NUMBER(10) NOT NULL, -- 사용 여부, 1: 활성, 0: 비활성 지정됨
+    rdate DATE NOT NULL
 );
 
 COMMENT ON TABLE admin is '관리자';

@@ -29,8 +29,6 @@
     PW : <input type="password" name="password"> <br><br>
     
     <input type="submit" value="LOGIN"> 
-    <input type="button" value="사용자 테스트 계정" 
-               onclick="frm.id.value='user1'; frm.password.value='1234'">
     <input type="button" value="관리자 테스트 계정" 
                onclick="frm.id.value='admin1'; frm.password.value='1234'"> <br>
 </form>

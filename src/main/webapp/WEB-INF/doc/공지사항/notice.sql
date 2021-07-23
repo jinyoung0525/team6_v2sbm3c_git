@@ -13,8 +13,8 @@ CREATE TABLE notice(
     nimage VARCHAR2(100),
     nimagesaved VARCHAR2(100),
     nsize LONG,
-    ADMINNO NUMBER(10),
-  FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO)
+    adminno NUMBER(10),
+  FOREIGN KEY (adminno) REFERENCES admin (adminno)
 );
 
 COMMENT ON TABLE notice is '공지사항';
@@ -27,7 +27,7 @@ COMMENT ON COLUMN notice.rdate is '등록일';
 COMMENT ON COLUMN notice.nimage is '이미지';
 COMMENT ON COLUMN notice.nimagesaved is '저장된이미지';
 COMMENT ON COLUMN notice.nsize is '이미지크기';
-COMMENT ON COLUMN notice.ADMINNO is '관리자 번호';
+COMMENT ON COLUMN notice.adminno is '관리자 번호';
 
 
 DROP SEQUENCE notice_seq;
@@ -46,7 +46,7 @@ INSERT INTO notice(nnum, ntitle, ncontent, cnt, word, rdate, nimage, nimagesaved
 VALUES(notice_seq.nextval,'공지1', '첫번째 공지입니다.', 0, '공지1, 첫공지', sysdate, 'notice1.jpg', 'notice1_1.jpg', 1000);
 
 -- 목록
-SELECT nnum, ntitle, rdate, cnt, ADMINNO
+SELECT nnum, ntitle, rdate, cnt, adminno
 FROM notice
 ORDER BY nnum DESC;
 

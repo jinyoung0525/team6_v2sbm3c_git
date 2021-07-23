@@ -1,6 +1,6 @@
 
 /**********************************/
-/* Table Name: °Ô½ÃÆÇ */
+/* Table Name: ê²Œì‹œíŒ */
 /**********************************/
 DROP TABLE board;
 
@@ -17,49 +17,49 @@ CREATE TABLE board(
     image VARCHAR2(100) NULL,
     imagesaved VARCHAR2(100) NULL,
     size NUMBER(10) NULL,
-    MEMBERNO NUMBER(10) NOT NULL,
-  FOREIGN KEY (MEMBERNO) REFERENCES member (MEMBERNO)
+    memberno NUMBER(10) NOT NULL,
+  FOREIGN KEY (memberno) REFERENCES member (memberno)
 );
 
 
-COMMENT ON TABLE board is '°Ô½ÃÆÇ';
-COMMENT ON COLUMN board.bnum is '±Û¹øÈ£';
-COMMENT ON COLUMN board.btitle is '±ÛÁ¦¸ñ';
-COMMENT ON COLUMN board.bcontent is '±Û³»¿ë';
-COMMENT ON COLUMN board.recom is 'ÃßÃµ¼ö';
-COMMENT ON COLUMN board.cnt is 'Á¶È¸¼ö';
-COMMENT ON COLUMN board.replycnt is '´ñ±Û¼ö';
-COMMENT ON COLUMN board.passwd is 'ÆĞ½º¿öµå';
-COMMENT ON COLUMN board.word is '°Ë»ö¾î';
-COMMENT ON COLUMN board.rdate is 'µî·ÏÀÏ';
-COMMENT ON COLUMN board.image is 'ÀÌ¹ÌÁö';
-COMMENT ON COLUMN board.imagesaved is 'ÀúÀåµÈÀÌ¹ÌÁö';
-COMMENT ON COLUMN board.size is 'ÀÌ¹ÌÁöÅ©±â';
-COMMENT ON COLUMN board.MEMBERNO is 'È¸¿ø ¹øÈ£';
+COMMENT ON TABLE board is 'ê²Œì‹œíŒ';
+COMMENT ON COLUMN board.bnum is 'ê¸€ë²ˆí˜¸';
+COMMENT ON COLUMN board.btitle is 'ê¸€ì œëª©';
+COMMENT ON COLUMN board.bcontent is 'ê¸€ë‚´ìš©';
+COMMENT ON COLUMN board.recom is 'ì¶”ì²œìˆ˜';
+COMMENT ON COLUMN board.cnt is 'ì¡°íšŒìˆ˜';
+COMMENT ON COLUMN board.replycnt is 'ëŒ“ê¸€ìˆ˜';
+COMMENT ON COLUMN board.passwd is 'íŒ¨ìŠ¤ì›Œë“œ';
+COMMENT ON COLUMN board.word is 'ê²€ìƒ‰ì–´';
+COMMENT ON COLUMN board.rdate is 'ë“±ë¡ì¼';
+COMMENT ON COLUMN board.image is 'ì´ë¯¸ì§€';
+COMMENT ON COLUMN board.imagesaved is 'ì €ì¥ëœì´ë¯¸ì§€';
+COMMENT ON COLUMN board.size is 'ì´ë¯¸ì§€í¬ê¸°';
+COMMENT ON COLUMN board.memberno is 'íšŒì› ë²ˆí˜¸';
 
 
 DROP SEQUENCE board_seq;
 
 CREATE SEQUENCE board_seq
-  START WITH 1                -- ½ÃÀÛ ¹øÈ£
-  INCREMENT BY 1            -- Áõ°¡°ª
-  MAXVALUE 9999999999  -- ÃÖ´ë°ª: 9999999999 --> NUMBER(10) ´ëÀÀ
-  CACHE 2                        -- 2¹øÀº ¸Ş¸ğ¸®¿¡¼­¸¸ °è»ê
-  NOCYCLE;                      -- ´Ù½Ã 1ºÎÅÍ »ı¼ºµÇ´Â °ÍÀ» ¹æÁö
+  START WITH 1                -- ì‹œì‘ ë²ˆí˜¸
+  INCREMENT BY 1            -- ì¦ê°€ê°’
+  MAXVALUE 9999999999  -- ìµœëŒ€ê°’: 9999999999 --> NUMBER(10) ëŒ€ì‘
+  CACHE 2                        -- 2ë²ˆì€ ë©”ëª¨ë¦¬ì—ì„œë§Œ ê³„ì‚°
+  NOCYCLE;                      -- ë‹¤ì‹œ 1ë¶€í„° ìƒì„±ë˜ëŠ” ê²ƒì„ ë°©ì§€
   
   
   
--- µî·Ï
-INSERT INTO board(bnum, btitle, bcontent, passwd, word, rdate, image, imagesaved, size, MEMBERNO)
-VALUES(board_seq, '°Ô½Ã±Û1', 'Ã¹¹øÂ° °Ô½Ã±ÛÀÔ´Ï´Ù.', '1234', 'Ã¹±Û, Ã¹¹øÂ°', sysdate, 'first.jpg', 'first_1.jpg', 1000, 1);
+-- ë“±ë¡
+INSERT INTO board(bnum, btitle, bcontent, passwd, word, rdate, image, imagesaved, size, memberno)
+VALUES(board_seq, 'ê²Œì‹œê¸€1', 'ì²«ë²ˆì§¸ ê²Œì‹œê¸€ì…ë‹ˆë‹¤.', '1234', 'ì²«ê¸€, ì²«ë²ˆì§¸', sysdate, 'first.jpg', 'first_1.jpg', 1000, 1);
 
--- ¸ñ·Ï
-SELECT bnum, btitle, rdate, cnt, MEMBERNO
+-- ëª©ë¡
+SELECT bnum, btitle, rdate, cnt, memberno
 FROM board
 ORDER BY bnum DESC;
 
--- Á¶È¸
-SELECT bnum, btitle, bcontent, passwd, recom, cnt, replycnt, word, rdate, image, imagesaved, size, MEMBERNO
+-- ì¡°íšŒ
+SELECT bnum, btitle, bcontent, passwd, recom, cnt, replycnt, word, rdate, image, imagesaved, size, memberno
 FROM board
 WHERE bnum=1;
 
