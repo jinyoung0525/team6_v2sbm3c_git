@@ -2,7 +2,7 @@
 /* Table Name: 관리자 */
 /**********************************/
 CREATE TABLE admin(
-    adminno INTEGER(10) NOT NULL PRIMARY KEY,
+    adminno NUMBER(10) NOT NULL PRIMARY KEY,
     id VARCHAR(20) NOT NULL,
     name VARCHAR(300) NOT NULL,
     password VARCHAR(100) NOT NULL,
