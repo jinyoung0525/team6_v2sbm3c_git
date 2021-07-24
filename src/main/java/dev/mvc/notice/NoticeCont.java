@@ -136,7 +136,7 @@ public class NoticeCont {
    @RequestMapping(value = "/notice/list.do", method = RequestMethod.GET)
     public ModelAndView list() { 
       ModelAndView mav = new  ModelAndView(); // /webapp/notice/list.jsp //
-      mav.setViewName("/notice/list.do");
+      mav.setViewName("/notice/list");
       
       List<NoticeVO> list = this.noticeProc.list();
       mav.addObject("list", list);

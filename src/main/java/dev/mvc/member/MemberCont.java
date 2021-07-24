@@ -109,17 +109,12 @@ public class MemberCont {
   public ModelAndView list(HttpSession session) {
     ModelAndView mav = new ModelAndView();
     
-    if (this.memberProc.isAdmin(session)) {
       List<MemberVO> list = memberProc.list();
       mav.addObject("list", list);
 
       mav.setViewName("/member/list"); // /webapp/WEB-INF/views/member/list.jsp
      
-    } else {
-      mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
-      
-      mav.setViewName("redirect:/member/msg.do");      
-    }
+
     
     
     return mav;
