@@ -33,38 +33,9 @@
 
 
 <DIV class='content_body'>
-<!--
-  <ASIDE class="aside_right">
-    <A href="./create.do?cateno=${productVO.productno }">등록</A>
-    <span class='menu_divide' >│</span>
-    <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span>
-    <A href="./list_by_cateno_search_paging.do?cateno=${product.cateno }">기본 목록형</A>    
-    <span class='menu_divide' >│</span>
-    <A href="./list_by_cateno_grid.do?cateno=${product.cateno }">갤러리형</A>
-  </ASIDE>
-  
-    <DIV style="text-align: right; clear: both;">  
-    <form name='frm' id='frm' method='get' action='./list_by_cateno_search.do'>
-      <input type='hidden' name='cateno' value='${cateVO.cateno }'>
-      <c:choose>
-        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
-          <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input type='text' name='word' id='word' value='' style='width: 20%;'>
-        </c:otherwise>
-      </c:choose>
-      <button type='submit'>검색</button>
-      <c:if test="${param.word.length() > 0 }">
-        <button type='button' 
-                     onclick="location.href='./list_by_cateno_search.do?cateno=${cateVO.cateno}&word='">검색 취소</button>  
-      </c:if>    
-    </form>
-  </DIV>
-  
+
   <DIV class='menu_line'></DIV>
-  -->
+ 
   <FORM name='frm' method='POST' action='./create.do' class="form-horizontal"
               enctype="multipart/form-data">
     <input type="hidden" name="adminno" value="1"> <%-- 관리자 개발후 변경 필요 --%>
