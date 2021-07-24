@@ -1281,7 +1281,7 @@
                         <supportSize>true</supportSize>
                         <type>12</type>
                       </columnType>
-                      <size>400</size>
+                      <size>300</size>
                       <notNull>false</notNull>
                       <primaryKey>false</primaryKey>
                       <description></description>
