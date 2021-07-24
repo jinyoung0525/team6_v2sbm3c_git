@@ -13,6 +13,7 @@
       <A class='menu_link'  href='/album/list_by_artistno_grid.do'>앨범</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/notice/list.do'>공지사항</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/board/list.do'>게시판</A><span class='top_menu_sep'> </span>
+      <A class='menu_link'  href='/product/list.do'>이용권</A><span class='top_menu_sep'> </span>
       
       회원[
       <c:choose>

@@ -34,6 +34,9 @@ dependencies {
   implementation 'org.springframework.security:spring-security-taglibs'
   implementation 'org.springframework.boot:spring-boot-starter-security'
   testImplementation 'org.springframework.security:spring-security-test'
+  
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-webflux  ai 7/25추가
+implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.4.5'
 }
 
 test {
