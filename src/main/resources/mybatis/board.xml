@@ -7,9 +7,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="dev.mvc.board.BoardDAOInter"> 
   <insert id="create" parameterType="dev.mvc.board.BoardVO">
         INSERT INTO board(bnum, btitle, bcontent, passwd, word, 
-                                            rdate, image, imagesaved, size, MEMBERNO)
+                                            rdate, image, imagesaved, imagesize, MEMBERNO)
         VALUES(board_seq.nextval, #{btitle}, #{bcontent}, #{passwd}, #{word}, 
-                                            sysdate, #{image}, #{imagesaved}, #{size}, #{MEMBERNO})
+                                            sysdate, #{image}, #{imagesaved}, #{imagesize}, #{MEMBERNO})
 
   </insert>
 
@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   
   <select id="read" resultType="dev.mvc.board.BoardVO" parameterType="int">
-    SELECT bnum, btitle, bcontent, passwd, recom, cnt, replycnt, word, rdate, image, imagesaved, size, MEMBERNO
+    SELECT bnum, btitle, bcontent, passwd, recom, cnt, replycnt, word, rdate, image, imagesaved, imagesize, MEMBERNO
     FROM board
     WHERE bnum=#{bnum}
   </select>

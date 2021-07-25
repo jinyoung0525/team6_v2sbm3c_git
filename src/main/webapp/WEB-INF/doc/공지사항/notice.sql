@@ -13,7 +13,7 @@ CREATE TABLE notice(
     nimage VARCHAR2(100),
     nimagesaved VARCHAR2(100),
     nsize LONG,
-    adminno NUMBER(10),
+    adminno INTEGER(10),
   FOREIGN KEY (adminno) REFERENCES admin (adminno)
 );
 

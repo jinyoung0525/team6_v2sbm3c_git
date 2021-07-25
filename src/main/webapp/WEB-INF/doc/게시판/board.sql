@@ -16,8 +16,8 @@ CREATE TABLE board(
     rdate DATE NOT NULL,
     image VARCHAR2(100) NULL,
     imagesaved VARCHAR2(100) NULL,
-    size NUMBER(10) NULL,
-    memberno NUMBER(10) NOT NULL,
+    imagesize NUMBER(10) NULL,
+    memberno INTEGER(10) NOT NULL,
   FOREIGN KEY (memberno) REFERENCES member (memberno)
 );
 
@@ -34,7 +34,7 @@ COMMENT ON COLUMN board.word is '검색어';
 COMMENT ON COLUMN board.rdate is '등록일';
 COMMENT ON COLUMN board.image is '이미지';
 COMMENT ON COLUMN board.imagesaved is '저장된이미지';
-COMMENT ON COLUMN board.size is '이미지크기';
+COMMENT ON COLUMN board.imagesize is '이미지크기';
 COMMENT ON COLUMN board.memberno is '회원 번호';
 
 
@@ -50,7 +50,7 @@ CREATE SEQUENCE board_seq
   
   
 -- 등록
-INSERT INTO board(bnum, btitle, bcontent, passwd, word, rdate, image, imagesaved, size, memberno)
+INSERT INTO board(bnum, btitle, bcontent, passwd, word, rdate, image, imagesaved, imagesize, memberno)
 VALUES(board_seq, '게시글1', '첫번째 게시글입니다.', '1234', '첫글, 첫번째', sysdate, 'first.jpg', 'first_1.jpg', 1000, 1);
 
 -- 목록
@@ -59,7 +59,7 @@ FROM board
 ORDER BY bnum DESC;
 
 -- 조회
-SELECT bnum, btitle, bcontent, passwd, recom, cnt, replycnt, word, rdate, image, imagesaved, size, memberno
+SELECT bnum, btitle, bcontent, passwd, recom, cnt, replycnt, word, rdate, image, imagesaved, imagesize, memberno
 FROM board
 WHERE bnum=1;
 
