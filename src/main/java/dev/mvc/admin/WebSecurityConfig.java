@@ -54,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/member/create.do").permitAll()
                 // 이용권
                 .antMatchers("/product/*").permitAll() 
+                .antMatchers("/pay/*").permitAll() 
                 
                 
                 // <회원만 가능> ..음
