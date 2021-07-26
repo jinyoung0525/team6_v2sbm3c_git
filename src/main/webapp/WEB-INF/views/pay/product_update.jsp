@@ -39,7 +39,6 @@
     <div class="form-group">
        <label class="control-label col-md-2">이용권명</label>
        <div class="col-md-10">
-       <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">    
          <input type='text' name='product_name' value='${productVO.product_name}' required="required" autofocus="autofocus"
                     class="form-control" style='width: 100%;'>
        </div>
@@ -55,7 +54,8 @@
     <div class="form-group">
        <label class="control-label col-md-2">듣기 횟수<br>(음수는 무제한)</label>
        <div class="col-md-10">
-         <input type='number' name='product_count' value='${productVO.product_count }' required="required" 
+         <input type='number' name='product_count' value='${productVO.product_count }' required="required"
+                    min="0" max="100" step="1" 
                     class="form-control" style='width: 100%;'>
        </div>
     </div> 
@@ -63,6 +63,7 @@
        <label class="control-label col-md-2">사용기간<br>(일단위로 입력)</label>
        <div class="col-md-10">
          <input type='number' name='product_day' value='${productVO.product_day }' required="required"
+                    min="0" max="10000000" 
                     class="form-control" style='width: 100%;'>
        </div>
     </div>                 
@@ -75,9 +76,9 @@
     <div class="form-group">
        <label class="control-label col-md-2">이미지</label>
        <div class="col-md-10">
-       <input type='text' name='file1' id='file1' value='${productVO.file1}' required="required"
-                    class="form-control" style='width: 100%;'>
-
+         <input type='file' class="form-control" name='file1' id='file1' 
+                    value='${productVO.file1}' placeholder="파일 선택">
+                     현재이미지 : ${productVO.file1}
        </div>
       
     </div>   

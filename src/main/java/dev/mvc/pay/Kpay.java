@@ -1,4 +1,4 @@
-package dev.mvc.product;
+package dev.mvc.pay;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 public class Kpay {
   String url = "https://kapi.kakao.com/";   //kakaopay post
   
-  public  String Kpayready(String partner_order_id,String partner_user_id, String item_name, String total_amount) {
+  public  String Kpayready() {
     
 
     WebClient webClient = WebClient.builder().build();
@@ -25,15 +25,15 @@ public class Kpay {
   
   
     formData.add("cid", "TC0ONETIME" );
-    formData.add("partner_order_id", partner_order_id );
-    formData.add("partner_user_id", partner_user_id );
-    formData.add("item_name",  item_name);
+    formData.add("partner_order_id", "partner_order_id" );
+    formData.add("partner_user_id", "partner_user_id" );
+    formData.add("item_name", "test01" );
     formData.add("quantity", "1" );
-    formData.add("total_amount", total_amount );
+    formData.add("total_amount", "2900" );
     formData.add("tax_free_amount",  "0" );
     formData.add("approval_url",  "http://localhost:9091/product/kpaysuccess.do");
-    formData.add("cancel_url", "http://localhost:9091/product/list.do" );
-    formData.add("fail_url", "http://localhost:9091/product/payfail.do" );
+    formData.add("cancel_url", "http://localhost:9091" );
+    formData.add("fail_url", "http://localhost:9091" );
     
   
   
@@ -51,7 +51,7 @@ public class Kpay {
     return res.get(0);
   }
   
-public  String Kpayapprove(String tid, String partner_order_id, String partner_user_id,  String token) {
+public  String Kpayapprove(String token, String tid) {
     
 
     WebClient webClient = WebClient.builder().build();
@@ -62,8 +62,8 @@ public  String Kpayapprove(String tid, String partner_order_id, String partner_u
   
     formData.add("cid", "TC0ONETIME" );
     formData.add("tid", tid );
-    formData.add("partner_order_id", partner_order_id );
-    formData.add("partner_user_id", partner_user_id );
+    formData.add("partner_order_id", "partner_order_id" );
+    formData.add("partner_user_id", "partner_user_id" );
     formData.add("pg_token", token );
     
     

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.pay.PayDAOInter"> 
+
+   <insert id="create_c" parameterType="dev.mvc.pay.PayVO">
+    
+    INSERT INTO pay(pay_no, pay_name, pay_count, pay_day, rdata, payment, price, tid, payment_method_type, created_at, approved_at, memberno)
+    VALUES(product_seq.nextval, #{pay_name}, #{pay_count}, #{pay_day}, sysdate, #{payment},  #{price}, #{tid}, #{payment_method_type}, TO_DATE(#{created_at}, 'yyyy-mm-dd"T"hh24:mi:ss'), TO_DATE(#{approved_at}, 'yyyy-mm-dd"T"hh24:mi:ss'),#{memberno})
+  </insert>
+  
+  <select id="list_by_search_paging" resultType="dev.mvc.pay.PayVO">
+    SELECT pay_no, pay_name, pay_count, pay_day, rdata, payment, price, tid, payment_method_type, created_at, approved_at, memberno
+    FROM pay
+    ORDER BY pay_no ASC
+  </select>
+  
+
+  
+    
+  <!-- 일반적인 조회 -->
+  <select id="read" resultType="dev.mvc.product.ProductVO" parameterType="int">
+    SELECT pay_no, pay_name, pay_count, pay_day, rdata, payment, price, tid, payment_method_type, created_at, approved_at, memberno
+    FROM pay
+    WHERE pay_no = #{pay_no}
+  </select>
+  
+  <!-- 주문번호생성 -->
+   <insert id="order_no" parameterType="int">
+    
+    INSERT INTO ordernumber(order_no)
+    VALUES(product_seq.nextval)
+  </insert>
+  
+
+</mapper> 
+
+
+
+
+
+
+
+   
+   

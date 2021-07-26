@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     VALUES(product_seq.nextval, #{product_name}, #{product_count}, #{product_day}, #{product_cont}, sysdate, #{product_price}, #{file1})
   </insert>
   
-  <select id="list_by_search_paging" resultType="dev.mvc.product.ProductVO">
+  <select id="list_product_asc" resultType="dev.mvc.product.ProductVO">
     SELECT product_no, product_name, product_count, product_day, product_cont, rdata , product_price, file1
     FROM product
     ORDER BY product_no ASC
@@ -34,21 +34,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM product
     WHERE product_no = #{product_no}
   </select>
-  
-  <!-- 텍스트 수정 -->
-  <update id="update_text" parameterType="dev.mvc.product.ProductVO">
-    UPDATE product
-    SET product_name=#{product_name}, product_count=#{product_count},  product_day=#{product_day}, 
-          product_cont=#{product_cont}, product_price=#{product_price}, file1=#{file1}
-    WHERE product_no = #{product_no}
-  </update>
-  
-  <!-- 파일 수정 -->
-  <update id="update_file" parameterType="dev.mvc.product.ProductVO">
-    UPDATE product
-    SET file1=#{file1}, file1saved=#{file1saved}, thumb1=#{thumb1}, size1=#{size1}
-    WHERE contents_no = #{contents_no}
-  </update>
+ 
+  <!-- 삭제 -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM product
+    WHERE product_no=#{product_no}
+  </delete>
      
 </mapper> 
 

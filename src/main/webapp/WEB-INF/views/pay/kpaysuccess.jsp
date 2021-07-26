@@ -29,9 +29,7 @@
    //console.log(patId);
    //window.opener.document.getElementById("pInput").value = patId
    
-   
-   
-   setTimeout(() => { window.opener.location.href="/product/paysuccess_msg.do"; window.close();  }, 3000);
+   setTimeout(() => { window.opener.location.href="/product/paysuccess_msg.do"; window.close();  }, 2000);
    
 } 
    </script>
@@ -40,7 +38,7 @@
 
 <body>
  
-<IMG src="/product/images/ko_loading.gif" style="mamargin :auto;">
+
  
 </body>
 </html>

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import dev.mvc.pay.PayProcInter;
+import dev.mvc.pay.PayVO;
 //import dev.mvc.member.MemberProcInter;
 import dev.mvc.tool.Tool;
 import dev.mvc.tool.Upload;
@@ -33,10 +36,14 @@ import reactor.core.publisher.Mono;
 @Controller
 public class ProductCont {
 
-  private static String tid = null;
+  
   @Autowired
   @Qualifier("dev.mvc.product.ProductProc")
   private ProductProcInter productProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.pay.PayProc")
+  private PayProcInter payProc;
 
   
   public ProductCont() {
@@ -161,13 +168,13 @@ public class ProductCont {
 	  List<ProductVO> list = this.productProc.list_product_asc();
 	    mav.addObject("list", list); // request.setAttribute("list", list);
 
-	    mav.setViewName("/product/list"); // /webapp/bookmarkgrp/list.jsp
+	    mav.setViewName("/product/list_by_search_paging"); // /webapp/bookmarkgrp/list.jsp
 	    return mav;
 }
 	
 	/**
-	* 목록 + 검색 + 페이징 지원
-	* http://localhost:9091/product/list_by_cateno_search_paging.do?cateno=1&word=스위스&now_page=1
+	* 목록
+	* 
 	* 
 	* @param cateno
 	* @param word
@@ -175,53 +182,18 @@ public class ProductCont {
 	* @return
 	*/
 	@RequestMapping(value = "/product/list.do", method = RequestMethod.GET)
-	public ModelAndView list_by_search_paging(
-			@RequestParam(value = "word", defaultValue = "") String word,
-			//@RequestParam(value = "now_page", defaultValue = "1")int now_page,
-			@RequestParam(value = "v", defaultValue = "l")  String v) {
+	public ModelAndView list_product_asc() {
 		  //System.out.println("--> now_page: " + now_page);
 	  
 
 		ModelAndView mav = new ModelAndView();
 
-		// 숫자와 문자열 타입을 저장해야함으로 Obejct 사용
-		HashMap<String, Object> map = new HashMap<String, Object>();
-	    //map.put("cateno", cateno); // #{cateno}
-	    map.put("word", word); // #{word}
-	    //map.put("now_page", now_page); // 페이지에 출력할 레코드의 범위를 산출하기위해 사용
-	    map.put("v", v);
-	    // 검색 목록
-	    List<ProductVO> list = productProc.list_by_search_paging(map);
+	
+	    List<ProductVO> list = productProc.list_product_asc();
 	    mav.addObject("list", list);
-	    System.out.println("--> now_page: "+ list);
 
-	    // 검색된 레코드 갯수
-	    //int search_count = productProc.search_count(map);
-	    //mav.addObject("search_count", search_count);
-
-
-	    /*
-	     * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 현재 페이지: 11 / 22 [이전] 11 12 13 14 15 16 17
-	     * 18 19 20 [다음]
-	     * @param list_file 목록 파일명
-	     * @param cateno 카테고리번호
-	     * @param search_count 검색(전체) 레코드수
-	     * @param now_page 현재 페이지
-	     * @param word 검색어
-	     * @return 페이징 생성 문자열
-	     */
-	    //String paging = productProc.pagingBox("list.do",search_count, now_page, word, v);
-	    //mav.addObject("paging", paging);
-	     
-	    //mav.addObject("now_page", now_page);
-
-	    // /product/list_by_cateno_table_img1_search_paging.jsp
 	    
-	    if(v.equals("g")) {
-	    	mav.setViewName("/product/list_by_grid");
-	    } else {
-	    	mav.setViewName("/product/list_by_search_paging");
-	    }
+	    	mav.setViewName("/product/list_product_asc");
 	    	
 	    return mav;
 	   }
@@ -233,7 +205,7 @@ public class ProductCont {
 	    * @return
 	    */
 	   @RequestMapping(value="/product/read.do", method=RequestMethod.GET )
-	   public ModelAndView read(int product_no) {
+	   public ModelAndView read(HttpSession session, int product_no) {
 	     // public ModelAndView read(int productno, int now_page) {
 	     // System.out.println("-> now_page: " + now_page);
 	     
@@ -300,27 +272,11 @@ public class ProductCont {
 	   
 	   
 	   
-	   /**
-      * 등록폼
-      * http://localhost:9091/product/create.do?cateno=1
-      * 
-      * @return
-      */
-      
-     @RequestMapping(value = "/product/kpay5.do", method = RequestMethod.GET)
-     public ModelAndView Test(String res) {
-  
-       ModelAndView mav = new ModelAndView();
-       
-       System.out.println(res);
-       mav.addObject("cnt", res);
-       //mav.setViewName("redirect:"+ res{);
-       
-       return mav;
-
-     }
-     
-	   
+	   //이용권정보
+	   private static String tid = null;
+	   private static int product_price;
+	   private static int Pay_count;
+	   private static int Pay_day;
 	  
      /**
       * 주문 처리
@@ -331,32 +287,79 @@ public class ProductCont {
 	   @RequestMapping(value="/product/kpay.do", 
                                          method=RequestMethod.GET)
 	   @ResponseBody
-	   public String Kpay() {
+	   public String Kpay(HttpSession session, int product_no, int product_price, int Pay_count, int Pay_day) {
 	     
-	     Kpay kpay  = new Kpay();
-	     String kpay2 = kpay.Kpayready();
 	     
-	     JSONObject json = new JSONObject(kpay2);
-	     System.out.println(json.get("tid"));
-	     
-	     tid = json.get("tid").toString();
-	     
-	    
-	     return json.toString();
-	     
+	       
+	       ProductVO productVO = this.productProc.read(product_no);
+	       //System.out.println(session.getAttribute("id"));
+	       //System.out.println(session);
+	       String partner_order_id ="00001";  //주문번호
+	       String partner_user_id = (String) session.getAttribute("id");  //구매자id
+	       
+	       String Product_name = productVO.getProduct_name();
+	       String product_pricest = Integer.toString(productVO.getproduct_price());
+	       
+	       Kpay kpay  = new Kpay();
+	       String kpay2 = kpay.Kpayready(partner_order_id, partner_user_id,
+	                                                 Product_name,product_pricest);
+	       
+	       this.product_price = product_price;
+	       this.Pay_count = Pay_count;
+	       this.Pay_day = Pay_day;
+	       
+	       
+	       JSONObject json = new JSONObject(kpay2);
+	       System.out.println(json.get("tid"));
+	       
+	       tid = json.get("tid").toString();
+	      
+	       
+	       return json.toString();
+	       
+
 	   }
        
+     /**
+      * 결제완료 http://localhost:9091/product/kpaysuccess.do
+      * 
+      * @return
+      */
 	   @RequestMapping(value = "/product/kpaysuccess.do", method = RequestMethod.GET)
-     public ModelAndView test3(String pg_token) {
+     public ModelAndView create_c(HttpSession session, String pg_token) {
        ModelAndView mav = new ModelAndView();
    
+       String partner_order_id ="00001";
+       String partner_user_id = (String) session.getAttribute("id");
+       
+       
        
        Kpay kpay  = new Kpay();
-       String kpay2 = kpay.Kpayapprove(pg_token, tid);
+       String kpay2 = kpay.Kpayapprove(tid, partner_order_id, partner_user_id, pg_token);
        
-       System.out.println(kpay2);
-
+       JSONObject json = new JSONObject(kpay2);
        
+       //json.get(key)
+       
+       PayVO payVO = new PayVO();
+       payVO.setApproved_a(json.getString("approved_at"));
+       payVO.setCreated_at(json.getString("created_at"));
+       payVO.setPay_count(this.Pay_count);
+       payVO.setPay_day(this.Pay_day);
+       payVO.setPay_name(json.getString("item_name"));
+       payVO.setPayment("카카오페이");
+       payVO.setPayment_method_type(json.getString("payment_method_type"));
+       payVO.setPrice(this.product_price);
+       payVO.setTid(tid);
+       payVO.setMemberno(1);
+       
+       System.out.println(json.getString("approved_at"));
+       //System.out.println(payVO.getPay_count());
+       
+       
+       payProc.create_c(payVO);
+    
+ 
        mav.addObject("tid", tid);
        mav.setViewName("/product/kpaysuccess"); // /webapp/WEB-INF/views/product/create.jsp
 
@@ -364,6 +367,11 @@ public class ProductCont {
        return mav; // forward
      }
 	   
+	   /**
+      * 결제성공 http://localhost:9091/product/kpaysuccess.do
+      * 
+      * @return
+      */
 	   @RequestMapping(value = "/product/paysuccess_msg.do", method = RequestMethod.GET)
      public ModelAndView Kpaysuccess() {
        ModelAndView mav = new ModelAndView();
@@ -374,31 +382,40 @@ public class ProductCont {
 
        return mav; // forward
      }
-	   
-    
-     @RequestMapping(value = "/product/kpay2.do", method = RequestMethod.GET)
-     public ModelAndView test() {
+	   /**
+      * 결제실패 http://localhost:9091/product/kpaysuccess.do
+      * 
+      * @return
+      */
+	   @RequestMapping(value = "/product/payfail_msg.do", method = RequestMethod.GET)
+     public ModelAndView Kpayfail() {
        ModelAndView mav = new ModelAndView();
        
        
-       mav.setViewName("/product/kpay"); // /webapp/WEB-INF/views/product/create.jsp
+       mav.setViewName("/product/payfail_msg"); // /webapp/WEB-INF/views/product/create.jsp
 
 
        return mav; // forward
      }
+
      
-
-     @RequestMapping(value = "/product/kpay.do", method = RequestMethod.POST)
-     public ModelAndView test2() {
+     /**
+      * 삭제 처리 http://localhost:9091/contents/delete.do
+      * 
+      * @return
+      */
+     @RequestMapping(value = "/product/delete.do", method = RequestMethod.POST)
+     public ModelAndView delete(int product_no) {
        ModelAndView mav = new ModelAndView();
-       
-       
-       mav.setViewName("redirect:/product/kpay.do");
-       mav.setViewName("/product/kpay"); // /webapp/WEB-INF/views/product/create.jsp
 
+      
+       int cnt = this.productProc.delete(product_no); // DBMS 삭제
+
+       
+       mav.setViewName("redirect:/product/list.do"); 
 
        return mav; // forward
-     }
+     }   
 
 }
 

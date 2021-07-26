@@ -34,10 +34,9 @@
 
 <DIV class='content_body'>
 
-  <DIV class='menu_line'></DIV>
- 
   <FORM name='frm' method='POST' action='./create.do' class="form-horizontal"
               enctype="multipart/form-data">
+  <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">    
     <input type="hidden" name="adminno" value="1"> <%-- 관리자 개발후 변경 필요 --%>
     
     <div class="form-group">
@@ -59,7 +58,7 @@
        <label class="control-label col-md-2">듣기 횟수<br>(음수는 무제한)</label>
        <div class="col-md-10">
          <input type='number' name='product_count' value='10' required="required"
-                    min="0" max="100" step="1" 
+                    step="1" 
                     class="form-control" style='width: 100%;'>
        </div>
     </div> 

@@ -25,22 +25,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     
 <script type="text/javascript">
-function getParameterByName(name) {
-  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-  results = regex.exec(location.search);
-  return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-var product_no = getParameterByName('product_no');
-
 function Kpay() {
-  <c:choose>
-  <c:when test="${sessionScope.id == null}"> <%-- 로그인 안 한 경 우 --%>
-             alert("로그인 후 이용 가능합니다.")
-  </c:when>
-  <c:otherwise>
-  var params ="";
-  params="product_no=${productno}&product_price=${price}&Pay_count=${count}&Pay_day=${day}"
   $.ajax(
     {
       url: '/product/kpay.do',
@@ -48,7 +33,7 @@ function Kpay() {
       cache: false, // 응답 결과 임시 저장 취소
       async: true,  // true: 비동기 통신
       dataType: 'json', // 응답 형식: json, html, xml...
-      data: params,
+     
       success: function(rdata) {
         var tid = rdata.tid; 
         var pcurl = rdata.next_redirect_pc_url;
@@ -60,10 +45,6 @@ function Kpay() {
         console.log(error);
       }
     });  //  $.ajax END
-    
-  </c:otherwise>
-</c:choose>     
-
 }
 
 
@@ -82,15 +63,31 @@ function Kpay() {
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
-    <A href="./product_update.do?product_no=${productno}">상품 수정</A>
+    <A href="./create.do?">상품등록</A>
     <span class='menu_divide' >│</span>
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>
-    <A href="./product/delete.do">상품삭제</A>
-    
+    <A href="./product_update.do?product_no=${productno}">수정</A>
   </ASIDE>
   
-	
+	<DIV style="text-align: right; clear: both;">  
+    <form name='frm' id='frm' method='get' action='./list.do?v=g'>
+      <c:choose>
+        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
+          <input type='text' name='word' id='word' value='${param.word}' style='width: 20%;'>
+          <input type="hidden" name='v' id='v' value='${param.v}' style='width: 20%;'>
+        </c:when>
+        <c:otherwise> <%-- 검색하지 않는 경우 --%>
+          <input type='text' name='word' id='word' value='' style='width: 20%;'>
+        </c:otherwise>
+      </c:choose>
+      <button type='submit'>검색</button>
+      <c:if test="${param.word.length() > 0 }">
+        <button type='button' 
+                     onclick="location.href='./list.do?word='">검색 취소</button>  
+      </c:if>    
+    </form>
+  </DIV>
   
   <DIV class='menu_line'></DIV>
 
@@ -100,18 +97,20 @@ function Kpay() {
           <DIV style="width: 50%; float: left; margin-right: 10px;">
             <IMG src="/product/images/${productVO.file1 }" style="width: 100%;">
           </DIV>
-          <DIV style="width: 47%; height: 260px; float: left; margin-right: 10px;">  
+          
+          <DIV style="width: 47%; height: 260px; float: left; margin-right: 10px;">
             <span style="font-size: 1.5em; font-weight: bold;">${name}<br><br></span>
             <span style="font-size: 1.3em;">${content}<br><br></span>
             <span style="font-size: 1.2em; font-weight: bold;">
             <fmt:formatNumber value="${price}" pattern="#,###" /> 원<br></span>
           
-
-<br>
-            <button onclick="javascript: Kpay()"><IMG src="/product/images/payment_icon_yellow_small.png" ></button>
-
+            <form>
+            <button type='button' onclick="javascript: Kpay()" class="btn btn-info">구매 하기</button>
+            </form>
           </DIV> 
-        
+         
+          
+        <DIV>${productcont }</DIV>
       </li>
       <li class="li_none">
         <DIV style='text-decoration: none;'>
