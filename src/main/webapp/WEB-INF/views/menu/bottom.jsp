@@ -3,12 +3,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
   
-  </DIV> <!-- <DIV class='container'> END --> 
-  <!-- 화면 하단 메뉴 --> 
-  <DIV style='text-align: center;'>
-    <HR>
-    Copyright Soldesk Blog All rights reserved(JSP + Spring + Interceptor)
+ </DIV> <%-- content 내용 종료 --%>
+
+  
+  <%-- 화면 하단 메뉴 --%>
+  <DIV class='copyright'>
+    Copyright Spring Boot All rights reserved.
   </DIV>
-</DIV> <!-- <DIV class='container_main'> END -->
+  
+</DIV> <%-- container_main 종료 --%>
    
   
