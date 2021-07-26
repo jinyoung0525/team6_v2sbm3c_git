@@ -1,6 +1,7 @@
 /**********************************/
 /* Table Name: 관리자 */
 /**********************************/
+DROP TABLE admin;
 CREATE TABLE admin(
     adminno NUMBER(10) NOT NULL PRIMARY KEY,
     id VARCHAR(20) NOT NULL,
@@ -9,7 +10,8 @@ CREATE TABLE admin(
     password VARCHAR(100) NOT NULL,
     authority VARCHAR(20) NOT NULL, -- 권한, ROLE_ADMIN 지정됨 ★
     enabled NUMBER(10) NOT NULL, -- 사용 여부, 1: 활성, 0: 비활성 지정됨
-    rdate DATE NOT NULL
+    rdate DATE NOT NULL,
+    grade NUMBER(2) NOT NULL -- 등급(1 ~ 10: 관리자 / 11~20: 회원 / 30~39: 정지 회원 / 40~49: 탈퇴 회원 / 99: 비회원)
 );
 
 COMMENT ON TABLE admin is '관리자';
@@ -21,6 +23,7 @@ COMMENT ON COLUMN admin.password is '패스워드';
 COMMENT ON COLUMN admin.authority is '권한, ROLE_ADMIN, ROLE_USER 지정됨';
 COMMENT ON COLUMN admin.enabled is '사용 여부, 1: 활성, 0: 비활성 지정됨';
 COMMENT ON COLUMN admin.rdate is '등록일';
+COMMENT ON COLUMN MEMBER.grade is '등급';
 
 DROP SEQUENCE admin_seq;
 CREATE SEQUENCE admin_seq
@@ -32,12 +35,12 @@ CREATE SEQUENCE admin_seq
 
 -- 1. 등록
 -- 1234 암호화: $2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W
-INSERT INTO admin(adminno, id, name, email, password, authority, enabled, rdate)
-VALUES(admin_seq.nextval, 'admin1', '김태리', 'admin1@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_ADMIN', 1, sysdate);
-INSERT INTO admin(adminno, id, name, email, password, authority, enabled, rdate)
-VALUES(admin_seq.nextval, 'admin2', '이병헌', 'admin2@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_ADMIN', 1, sysdate);
-INSERT INTO admin(adminno, id, name, email, password, authority, enabled, rdate)
-VALUES(admin_seq.nextval, 'admin3', '변요한', 'admin3@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_ADMIN', 1, sysdate);
+INSERT INTO admin(adminno, id, name, email, password, authority, enabled, rdate, grade)
+VALUES(admin_seq.nextval, 'admin1', '김태리', 'admin1@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_ADMIN', 1, sysdate, 1);
+INSERT INTO admin(adminno, id, name, email, password, authority, enabled, rdate, grade)
+VALUES(admin_seq.nextval, 'admin2', '이병헌', 'admin2@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_ADMIN', 1, sysdate, 1);
+INSERT INTO admin(adminno, id, name, email, password, authority, enabled, rdate, grade)
+VALUES(admin_seq.nextval, 'admin3', '변요한', 'admin3@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_ADMIN', 1, sysdate, 1);
 
 -- 2. 목록
 SELECT adminno, id, name, email, password, authority, enabled, rdate

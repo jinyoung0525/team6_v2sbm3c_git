@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.board.BoardVO;
+import dev.mvc.member.MemberProcInter;
 import dev.mvc.notice.NoticeVO;
 import dev.mvc.tool.Tool;
 import dev.mvc.tool.Upload;
@@ -26,6 +28,10 @@ public class NoticeCont {
   @Autowired
   @Qualifier("dev.mvc.notice.NoticeProc")
   private NoticeProcInter noticeProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.member.MemberProc")
+  private MemberProcInter memberProc;
   
   public NoticeCont() {
     System.out.println("-> NoticeCont created.");
@@ -150,13 +156,20 @@ public class NoticeCont {
    * @return
    */
   @RequestMapping(value="/notice/read.do", method=RequestMethod.GET )
-  public ModelAndView read(int nnum) {
+  public ModelAndView read(int nnum, HttpSession session) {
     ModelAndView mav = new ModelAndView();
-
-    NoticeVO noticeVO = this.noticeProc.read(nnum);
-    mav.addObject("noticeVO", noticeVO); // request.setAttribute("noticeVO", noticeVO);
     
-    mav.setViewName("/notice/read"); // /WEB-INF/views/notice/read.jsp
+    if (this.memberProc.isMember(session)) {
+      NoticeVO noticeVO = this.noticeProc.read(nnum);
+      mav.addObject("noticeVO", noticeVO); // request.setAttribute("noticeVO", noticeVO);
+      
+      mav.setViewName("/notice/read"); // /WEB-INF/views/notice/read.jsp
+      
+    } else {
+      mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
+      
+      mav.setViewName("redirect:/member/msg.do");     
+    }
         
     return mav;
   }
