@@ -5,6 +5,7 @@ CREATE TABLE admin(
     adminno NUMBER(10) NOT NULL PRIMARY KEY,
     id VARCHAR(20) NOT NULL,
     name VARCHAR(300) NOT NULL,
+    email VARCHAR(50) NOT NULL, -- 이메일
     password VARCHAR(100) NOT NULL,
     authority VARCHAR(20) NOT NULL, -- 권한, ROLE_ADMIN, ROLE_USER 지정됨 ★
     enabled NUMBER(10) NOT NULL, -- 사용 여부, 1: 활성, 0: 비활성 지정됨
