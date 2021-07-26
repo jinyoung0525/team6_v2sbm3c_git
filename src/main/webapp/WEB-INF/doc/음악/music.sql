@@ -46,12 +46,12 @@ CREATE SEQUENCE music_seq
 INSERT INTO music(songno, title, mp3, mp4, size3, size4, seqno, lyrics, likey, albumno, memberno, word)
 VALUES(music_seq.nextval, 'LOSER', 'LOSER.mp3', 'LOSER.mp4', 1, 1, 1,
 'LOSER 외톨이 센 척하는 겁쟁이 못된 양아치 거울 속에 넌 JUST A LOSER 외톨이 상처뿐인 머저리 더러운 쓰레기  거울 속에 난 IM A',
-0, 11, 1, 'loser');
+0, 1, 1, 'loser');
 
 INSERT INTO music(songno, title, mp3, mp4, size3, size4, seqno, lyrics, likey, albumno, memberno, word)
 VALUES(music_seq.nextval, 'BAE BAE', 'BAE BAE.mp3', 'BAE BAE.mp4', 1, 1, 2,
 '찹쌀떡 찹쌀떡 궁합이 우리 우리 궁합이 찹쌀떡 찹쌀떡 궁합이 우리 우리 궁합이 접기',
-0, 11, 1, 'bae bae');
+0, 1, 1, 'bae bae');
 
 commit;
 
