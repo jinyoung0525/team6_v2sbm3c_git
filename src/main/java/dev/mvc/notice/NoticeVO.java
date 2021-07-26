@@ -81,7 +81,7 @@ public class NoticeVO {
   public void setNsize(long nsize) {
     this.nsize = nsize;
   }
-  public int getadminno() {
+  public int getAdminno() {
     return adminno;
   }
   public void setAdminno(int adminno) {
