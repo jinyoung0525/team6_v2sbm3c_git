@@ -4,6 +4,7 @@
 
 <c:set var="btitle" value="${boardVO.btitle }" />
 <c:set var="bcontent" value="${boardVO.bcontent }" />
+<c:set var="bnum" value="${boardVO.bnum }" />
  
 <!DOCTYPE html> 
 <html lang="ko"> 
