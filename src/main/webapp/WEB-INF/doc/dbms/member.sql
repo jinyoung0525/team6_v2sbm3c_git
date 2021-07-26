@@ -1,6 +1,7 @@
 /**********************************/
 /* Table Name: 회원 */
 /**********************************/
+DROP TABLE member;
 CREATE TABLE member(
     memberno NUMBER(10) NOT NULL PRIMARY KEY, -- 회원 번호, 레코드를 구분하는 컬럼 
     id VARCHAR(20) NOT NULL UNIQUE, -- 아이디, 중복 안됨, 레코드를 구분 
