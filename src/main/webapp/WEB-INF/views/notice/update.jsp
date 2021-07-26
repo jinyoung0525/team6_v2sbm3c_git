@@ -67,20 +67,19 @@
     <div class="form-group">
        <label class="control-label col-md-2">이미지</label>
        <div class="col-md-10">
-            <input type='file' name='nimage1MF' id='nimage1MF' value='' placeholder="파일 선택"><br>
+            <input type='file' name='nimage1MF' id='nimage1MF' value='${nimage1MF }' placeholder="파일 선택"><br>
             <div style='margin-top: 20px; clear: both;'>  
-              <button type="submit" class="btn btn-primary">파일 변경 처리</button>
-              <button type="button" onclick="history.back();" class="btn btn-primary">취소</button>
+
             </div>  
           </div>
          </div>  
-  </FORM>
- </DIV>   
+  
     <div class="content_body_bottom">
       <button type="submit" class="btn btn-primary">등록</button>
       <button type="button" onclick="location.href='./list.do'" class="btn btn-primary">목록</button>
     </div>
-
+  </FORM>
+ </DIV> 
  
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>

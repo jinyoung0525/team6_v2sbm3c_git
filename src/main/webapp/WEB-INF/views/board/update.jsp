@@ -48,14 +48,14 @@
     <div class="form-group">
        <label class="control-label col-md-2">제목</label>
        <div class="col-md-10">
-         <input type='text' name='ntitle' value='${btitle }' required="required" 
+         <input type='text' name='btitle' value='${btitle }' required="required" 
                    autofocus="autofocus" class="form-control" style='width: 100%;'>
        </div>
     </div>
     <div class="form-group">
        <label class="control-label col-md-2">내용</label>
        <div class="col-md-10">
-         <textarea name='ncontent' required="required" class="form-control" rows="12" style='width: 100%;'> ${bcontent } </textarea>
+         <textarea name='bcontent' required="required" class="form-control" rows="12" style='width: 100%;'> ${bcontent } </textarea>
        </div>
     </div>
     <div class="form-group">
@@ -67,20 +67,18 @@
     <div class="form-group">
        <label class="control-label col-md-2">이미지</label>
        <div class="col-md-10">
-            <input type='file' name='image1MF' id='image1MF' value='' placeholder="파일 선택"><br>
+            <input type='file' name='image1MF' id='image1MF' value='${image1MF }' placeholder="파일 선택"><br>
             <div style='margin-top: 20px; clear: both;'>  
-              <button type="submit" class="btn btn-primary">파일 변경 처리</button>
-              <button type="button" onclick="history.back();" class="btn btn-primary">취소</button>
             </div>  
           </div>
          </div>  
-  </FORM>
- </DIV>   
+ 
     <div class="content_body_bottom">
       <button type="submit" class="btn btn-primary">등록</button>
       <button type="button" onclick="location.href='./list.do'" class="btn btn-primary">목록</button>
     </div>
-
+  </FORM>
+ </DIV>  
  
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>

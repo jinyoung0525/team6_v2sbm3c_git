@@ -232,7 +232,7 @@ public class BoardCont {
      
      
      int cnt = this.boardProc.update(boardVO); // 수정 처리
-     mav.addObject("nnum", boardVO.getBnum());
+     mav.addObject("bnum", boardVO.getBnum());
      mav.setViewName("redirect:/board/read.do"); 
 
      return mav; // forward

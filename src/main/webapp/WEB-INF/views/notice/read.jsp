@@ -4,6 +4,7 @@
 
 <c:set var="ntitle" value="${noticeVO.ntitle }" />
 <c:set var="ncontent" value="${noticeVO.ncontent }" />
+<c:set var="nnum" value="${noticeVO.nnum }" />
  
 <!DOCTYPE html> 
 <html lang="ko"> 
