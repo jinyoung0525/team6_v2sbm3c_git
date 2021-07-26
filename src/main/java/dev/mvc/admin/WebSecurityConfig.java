@@ -26,65 +26,47 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/*", "/test/**").permitAll()
-                .antMatchers("/css/**", "/js/**", "/images/**", "/album/images/**", "/album/storage/**", "/artist/images/**", "/artist/storage/**", 
-                    "/music/images/**", "/product/images/**").permitAll()
-                .antMatchers("/menu/**").permitAll()
-                .antMatchers("/cart/**").permitAll()
-                
-                .antMatchers("/**/msg.do").permitAll()
-                .antMatchers("/**/read.do").permitAll()
-                
-                // <모두 가능>
-                // 앨범
-                .antMatchers("/album/list_all.do").permitAll() 
-                .antMatchers("/album/list_by_artistno.do").permitAll() 
-                .antMatchers("/album/list_by_artistno_search.do").permitAll() 
-                .antMatchers("/album/list_by_artistno_search_paging.do").permitAll() 
-                .antMatchers("/album/list_by_artistno_grid.do").permitAll() 
-                .antMatchers("/album/list_all_join.do").permitAll() 
-                // 아티스트
-                .antMatchers("/artist/artist/list_by_artistno.do").permitAll()
-                .antMatchers("/artist/artist/list_by_artistno_search.do").permitAll()
-                .antMatchers("/artist/list_by_artistno_search_paging.do").permitAll() 
-                .antMatchers("/artist/list_by_artistno_grid.do").permitAll() 
-                // 공지사항
-                .antMatchers("/notice/list.do").permitAll() 
-                // 게시판
-                .antMatchers("/board/list.do").permitAll() 
-                // 회원가입
-                .antMatchers("/member/create.do").permitAll()
-                // 이용권
-                .antMatchers("/product/**").permitAll() 
-                .antMatchers("/pay/**").permitAll() 
-                
-                
-                // <회원만 가능> ..음
-                .antMatchers("/artist/update_fan_ajax.do").permitAll() 
-                .antMatchers("/album/update_likey_ajax.do").permitAll() 
-                .antMatchers("/member/passwd_update.do").permitAll() 
-                .antMatchers("/member/login.do").permitAll() 
-                .antMatchers("/member/logout.do").permitAll() 
-                
-                // <관리자만 가능>
-                // 앨범
-                .antMatchers("/album/update_album.do").hasRole("ADMIN")
-                .antMatchers("/album/create.do").hasRole("ADMIN") 
-                // 아티스트
-                .antMatchers("/artist/update_artist.do.do").hasRole("ADMIN")
-                .antMatchers("/artist*/create.do").hasRole("ADMIN") 
-                //게시판
-                .antMatchers("/board/create.do").hasRole("ADMIN") 
-                //공지사항
-                .antMatchers("/notice/create.do").hasRole("ADMIN") 
-                // 회원관리
-                .antMatchers("/member/list.do").hasRole("ADMIN")
-                .antMatchers("/member/read.do").hasRole("ADMIN")
-                .antMatchers("/member/update.do").hasRole("ADMIN")
-                
-                .antMatchers("/admin/**").hasRole("ADMIN")  // DBMS: ROLE_ADMIN이 선언되어 있어야함.
-                .antMatchers("/**/create.do").hasRole("ADMIN")  // DBMS: ROLE_ADMIN이 선언되어 있어야함.
-                .antMatchers("/**/delete.do").hasRole("ADMIN")
+        .antMatchers("/*", "/test/**").permitAll()
+        .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
+        .antMatchers("/menu/**").permitAll()
+        
+        .antMatchers("/**/msg.do").permitAll()
+        .antMatchers("/**/read.do").permitAll()
+        
+        // <모두 가능>
+        // 앨범
+        .antMatchers("/album/**").permitAll() 
+        // 아티스트
+        .antMatchers("/artist/**").permitAll()
+        // 공지사항
+        .antMatchers("/notice/**").permitAll() 
+        // 게시판
+        .antMatchers("/board/**").permitAll() 
+        // 회원가입
+        .antMatchers("/member/**").permitAll()
+        // 이용권
+        .antMatchers("/product/**").permitAll() 
+        .antMatchers("/pay/**").permitAll() 
+        
+        // <관리자만 가능>
+        // 앨범
+        .antMatchers("/album/update_album.do").hasRole("ADMIN")
+        .antMatchers("/album/create.do").hasRole("ADMIN") 
+        // 아티스트
+        .antMatchers("/artist/update_artist.do").hasRole("ADMIN")
+        .antMatchers("/artist/create.do").hasRole("ADMIN") 
+        //게시판
+        .antMatchers("/board/create.do").hasRole("ADMIN") 
+        //공지사항
+        .antMatchers("/notice/create.do").hasRole("ADMIN") 
+        // 회원관리
+        .antMatchers("/member/list.do").hasRole("ADMIN")
+        .antMatchers("/member/read.do").hasRole("ADMIN")
+        .antMatchers("/member/update.do").hasRole("ADMIN")
+        
+        .antMatchers("/admin/**").hasRole("ADMIN")  // DBMS: ROLE_ADMIN이 선언되어 있어야함.
+        .antMatchers("/**/create.do").hasRole("ADMIN")  // DBMS: ROLE_ADMIN이 선언되어 있어야함.
+        .antMatchers("/**/delete.do").hasRole("ADMIN")
                 
                 .anyRequest().authenticated();
  
