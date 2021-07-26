@@ -7,7 +7,7 @@ CREATE TABLE admin(
     name VARCHAR(300) NOT NULL,
     email VARCHAR(50) NOT NULL, -- 이메일
     password VARCHAR(100) NOT NULL,
-    authority VARCHAR(20) NOT NULL, -- 권한, ROLE_ADMIN, ROLE_USER 지정됨 ★
+    authority VARCHAR(20) NOT NULL, -- 권한, ROLE_ADMIN 지정됨 ★
     enabled NUMBER(10) NOT NULL, -- 사용 여부, 1: 활성, 0: 비활성 지정됨
     rdate DATE NOT NULL
 );
@@ -33,11 +33,11 @@ CREATE SEQUENCE admin_seq
 -- 1. 등록
 -- 1234 암호화: $2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W
 INSERT INTO admin(adminno, id, name, email, password, authority, enabled, rdate)
-VALUES(admin_seq.nextval, 'admin1', '김태리', 'admin1@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_USER', 1, sysdate);
+VALUES(admin_seq.nextval, 'admin1', '김태리', 'admin1@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_ADMIN', 1, sysdate);
 INSERT INTO admin(adminno, id, name, email, password, authority, enabled, rdate)
-VALUES(admin_seq.nextval, 'admin2', '이병헌', 'admin2@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_USER', 1, sysdate);
+VALUES(admin_seq.nextval, 'admin2', '이병헌', 'admin2@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_ADMIN', 1, sysdate);
 INSERT INTO admin(adminno, id, name, email, password, authority, enabled, rdate)
-VALUES(admin_seq.nextval, 'admin3', '변요한', 'admin3@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_USER', 1, sysdate);
+VALUES(admin_seq.nextval, 'admin3', '변요한', 'admin3@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_ADMIN', 1, sysdate);
 
 -- 2. 목록
 SELECT adminno, id, name, email, password, authority, enabled, rdate
