@@ -53,8 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 회원가입
                 .antMatchers("/member/create.do").permitAll()
                 // 이용권
-                .antMatchers("/product/*").permitAll() 
-                .antMatchers("/pay/*").permitAll() 
+                .antMatchers("/product/**").permitAll() 
+                .antMatchers("/pay/**").permitAll() 
                 
                 
                 // <회원만 가능> ..음
