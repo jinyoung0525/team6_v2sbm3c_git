@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/album/list_by_artistno_search.do").permitAll() 
                 .antMatchers("/album/list_by_artistno_search_paging.do").permitAll() 
                 .antMatchers("/album/list_by_artistno_grid.do").permitAll() 
+                .antMatchers("/album/list_all_join.do").permitAll() 
                 // 아티스트
                 .antMatchers("/artist/artist/list_by_artistno.do").permitAll()
                 .antMatchers("/artist/artist/list_by_artistno_search.do").permitAll()
