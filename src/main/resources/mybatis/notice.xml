@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="dev.mvc.notice.NoticeDAOInter"> 
   <insert id="create" parameterType="dev.mvc.notice.NoticeVO">
     INSERT INTO notice(nnum, ntitle, ncontent, cnt, word, rdate, nimage, nimagesaved, nsize)
-    VALUES(notice_seq.nextval, #{ntitle}, #{ncontent}, #{cnt}, #{word}, sysdate, #{nimage}, #{nimagesaved}, #{nsize});
+    VALUES(notice_seq.nextval, #{ntitle}, #{ncontent}, #{cnt}, #{word}, sysdate, #{nimage}, #{nimagesaved}, #{nsize})
   </insert>
 
 

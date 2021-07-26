@@ -8,7 +8,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>MusicBoot</title>
+<title>(가제)음악감상사이트</title>
  
 <link href="../css/style.css" rel="Stylesheet" type="text/css">
  
@@ -65,7 +65,7 @@
         
         <tr> 
           <td style='vertical-align: middle; text-align: center;'> ${noticeVO.nnum}</td>  
-          <td style='vertical-align: middle;'>
+          <td style='vertical-align: middle; text-align: center;'>
             <a href="./read.do?nnum=${nnum}"> ${noticeVO.ntitle}</a> 
           </td> 
           <td style='vertical-align: middle; text-align: center;'>${noticeVO.rdate}</td>

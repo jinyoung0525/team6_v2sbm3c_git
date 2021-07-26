@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
     nimagesaved VARCHAR2(100),
     nsize LONG,
     ADMINNO NUMBER(10),
-  FOREIGN KEY (adminno) REFERENCES ADMIN (adminno)
+  FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO)
  */
 public class NoticeVO {
   private int nnum;
@@ -85,7 +85,7 @@ public class NoticeVO {
     return adminno;
   }
   public void setAdminno(int adminno) {
-    adminno = adminno;
+    this.adminno = adminno;
   }
   
 
