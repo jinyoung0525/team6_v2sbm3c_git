@@ -2,7 +2,7 @@
 /* Table Name: 회원 */
 /**********************************/
 CREATE TABLE member(
-    memberno INTEGER(10) NOT NULL PRIMARY KEY, -- 회원 번호, 레코드를 구분하는 컬럼 
+    memberno NUMBER(10) NOT NULL PRIMARY KEY, -- 회원 번호, 레코드를 구분하는 컬럼 
     id VARCHAR(20) NOT NULL UNIQUE, -- 아이디, 중복 안됨, 레코드를 구분 
     passwd VARCHAR(60) NOT NULL, -- 패스워드
     mname VARCHAR(30) NOT NULL, -- 성명, 한글 10자 저장 가능
