@@ -21,6 +21,12 @@ public interface MusicDAOInter {
   public List<MusicVO> list_all();  
   
   /**
+   * Album + Music  join, 연결 목록
+   * @return
+   */
+  public List<MusicVO> list_all_join();  
+  
+  /**
    * 특정 카테고리의 등록된 글목록
    * @return
    */

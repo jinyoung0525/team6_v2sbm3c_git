@@ -38,6 +38,12 @@ public MusicProc() {
   }
 
   @Override
+  public List<MusicVO> list_all_join() {
+    List<MusicVO> list = this.musicDAO.list_all_join();
+    return list;
+  }
+  
+  @Override
   public List<MusicVO> list_by_albumno_search(HashMap<String, Object> hashMap) {
     List<MusicVO> list = musicDAO.list_by_albumno_search(hashMap);
     return list;
@@ -198,5 +204,7 @@ public MusicProc() {
     int cnt = this.musicDAO.update_likey(songno);
     return cnt;
   }
+
+  
 
 }

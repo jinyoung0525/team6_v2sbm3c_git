@@ -11,6 +11,7 @@
       <A class='menu_link'  href='/' >홈</A><span class='top_menu_sep'> </span> 
       <A class='menu_link'  href='/artist/list_by_artistno_grid.do'>아티스트</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/album/list_all_join.do'>앨범</A><span class='top_menu_sep'> </span>
+      <A class='menu_link'  href='/music/list_all_join.do'>곡</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/notice/list.do'>공지사항</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/board/list.do'>게시판</A><span class='top_menu_sep'> </span>
       <A class='menu_link'  href='/product/list.do'>이용권</A><span class='top_menu_sep'> </span>

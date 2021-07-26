@@ -19,6 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
   FOREIGN KEY (memberno) REFERENCES member (memberno)
  */
 public class MusicVO {
+  private int r_albumno;
+  
+  private String r_title;
 
   /** 음악 번호 */
   private int songno;
@@ -179,6 +182,31 @@ public class MusicVO {
 
   public void setSize4_label(String size4_label) {
     this.size4_label = size4_label;
+  }
+  
+  public int getR_albumno() {
+    return r_albumno;
+  }
+
+  public void setR_albumno(int r_albumno) {
+    this.r_albumno = r_albumno;
+  }
+
+  public String getR_title() {
+    return r_title;
+  }
+
+  public void setR_title(String r_title) {
+    this.r_title = r_title;
+  }
+
+  @Override
+  public String toString() {
+    return "[r_albumno=" + r_albumno + ", r_title=" + r_title + ", songno=" + songno + ", title=" + title
+        + ", mp3=" + mp3 + ", mp4=" + mp4 + ", size3=" + size3 + ", size4=" + size4 + ", seqno=" + seqno + ", lyrics="
+        + lyrics + ", likey=" + likey + ", albumno=" + albumno + ", memberno=" + memberno + ", word=" + word
+        + ", mp3MF=" + mp3MF + ", size3_label=" + size3_label + ", mp4MF=" + mp4MF + ", size4_label=" + size4_label
+        + "]";
   }
   
   

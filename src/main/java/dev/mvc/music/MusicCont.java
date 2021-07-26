@@ -194,6 +194,22 @@ public class MusicCont {
       
       return mav; // forward 
     }
+   
+   /**
+    * Album + Music join, 연결 목록
+    * http://localhost:9091/music/list_all_join.do 
+    * @return
+    */
+   @RequestMapping(value="/music/list_all_join.do", method=RequestMethod.GET )
+   public ModelAndView list_all_join() {
+     ModelAndView mav = new ModelAndView();
+     
+     List<MusicVO> list = this.musicProc.list_all_join();
+     mav.addObject("list", list); // request.setAttribute("list", list);
+
+     mav.setViewName("/music/list_all_join"); // /cate/list_all_join.jsp
+     return mav;
+   }
 
    /**
     * 목록 + 검색 지원

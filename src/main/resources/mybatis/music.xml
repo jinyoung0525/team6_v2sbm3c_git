@@ -22,6 +22,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    ORDER BY songno ASC
   </select>
   
+  <select id="list_all_join" resultType="dev.mvc.music.MusicVO" >
+    SELECT r.albumno as r_albumno, r.title as r_title,
+           c.songno, c.title, c.mp3, c.mp4, c.size3, c.size4, c.seqno, c.lyrics, c.likey, c.albumno, c.memberno
+    FROM album r, music c
+    WHERE r.albumno = c.albumno
+    ORDER BY albumno ASC, songno ASC
+  </select>
+  
   <select id="list_by_albumno_search" resultType="dev.mvc.music.MusicVO" 
              parameterType="HashMap">
     SELECT songno, title, mp3, mp4, size3, size4, seqno, lyrics, likey, albumno, memberno
