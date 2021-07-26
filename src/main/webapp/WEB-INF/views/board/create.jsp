@@ -37,6 +37,7 @@
   <FORM name='frm' method='POST' action='./create.do' class="form-horizontal"
               enctype="multipart/form-data">
     <input type="hidden" name="memberno" value="1"> <%-- 추후 변경 필요 --%>
+     <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
     
     <div class="form-group">
        <label class="control-label col-md-2">제목</label>

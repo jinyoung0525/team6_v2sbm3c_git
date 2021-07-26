@@ -52,7 +52,7 @@
           </c:otherwise>
         </c:choose>
         
-        <button type='button' onclick="location.href='./board/list.do'" class="btn btn-primary">목록</button>
+        <button type='button' onclick="location.href='/board/list.do'" class="btn btn-primary">목록</button>
       </LI>
     </UL>
   </fieldset>

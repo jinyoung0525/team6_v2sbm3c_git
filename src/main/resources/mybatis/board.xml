@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INSERT INTO board(bnum, btitle, bcontent, recom, cnt, replycnt, passwd, 
                                     word, rdate, image, imagesaved, imagesize)
         VALUES(board_seq.nextval, #{btitle}, #{bcontent}, #{recom}, #{cnt}, #{replycnt}, #{passwd}, 
-                     #{word}, sysdate, #{image}, #{imagesaved}, #{imagesize});
+                     #{word}, sysdate, #{image}, #{imagesaved}, #{imagesize})
 
   </insert>
 

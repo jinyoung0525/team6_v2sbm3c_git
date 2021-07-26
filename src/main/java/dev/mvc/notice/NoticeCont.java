@@ -123,7 +123,7 @@ public class NoticeCont {
 
     mav.addObject("url", "/notice/create_msg"); // create_msg.jsp, redirect parameter 적용
 
-    mav.setViewName("redirect:/notice/msg.do"); 
+    mav.setViewName("/notice/create_msg"); 
     
     return mav; // forward
   }
@@ -154,9 +154,9 @@ public class NoticeCont {
     ModelAndView mav = new ModelAndView();
 
     NoticeVO noticeVO = this.noticeProc.read(nnum);
-    mav.addObject("noticeVO", noticeVO); // request.setAttribute("boardVO", boardVO);
+    mav.addObject("noticeVO", noticeVO); // request.setAttribute("noticeVO", noticeVO);
     
-    mav.setViewName("/notice/read"); // /WEB-INF/views/contents/read.jsp
+    mav.setViewName("/notice/read"); // /WEB-INF/views/notice/read.jsp
         
     return mav;
   }
