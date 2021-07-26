@@ -44,4 +44,23 @@ public class NoticeProc implements NoticeProcInter {
     
     return noticeVO;
   }
+
+  @Override
+  public NoticeVO read_update(int nnum) {
+    NoticeVO noticeVO = this.noticeDAO.read(nnum);
+    return noticeVO;
+  }
+
+  @Override
+  public int update(NoticeVO noticeVO) {
+    int cnt = this.noticeDAO.update(noticeVO);
+    return cnt;
+  }
+
+  @Override
+  public int delete(int nnum) {
+    int cnt = this.noticeDAO.delete(nnum);
+    return cnt;
+  }
+
 }

@@ -23,4 +23,18 @@ public interface NoticeDAOInter {
    * @return
    */
   public NoticeVO read(int nnum);
+  
+  /**
+   * 수정
+   * @param noticeVO
+   * @return
+   */
+  public int update(NoticeVO noticeVO);
+  
+  /**
+   * 삭제
+   * @param nnum
+   * @return
+   */
+  public int delete(int nnum);
 }

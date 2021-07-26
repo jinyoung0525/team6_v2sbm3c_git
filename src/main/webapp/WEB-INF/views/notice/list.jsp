@@ -66,7 +66,7 @@
         <tr> 
           <td style='vertical-align: middle; text-align: center;'> ${noticeVO.nnum}</td>  
           <td style='vertical-align: middle;'>
-            <a href="./read.do?nnum=${nnum}"> ${noticeVO.ncontent}</a> 
+            <a href="./read.do?nnum=${nnum}"> ${noticeVO.ntitle}</a> 
           </td> 
           <td style='vertical-align: middle; text-align: center;'>${noticeVO.rdate}</td>
           <td style='vertical-align: middle; text-align: center;'>관리자(추후구현)</td>

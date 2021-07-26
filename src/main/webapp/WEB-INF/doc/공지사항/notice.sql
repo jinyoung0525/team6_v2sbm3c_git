@@ -45,6 +45,8 @@ CREATE SEQUENCE notice_seq
 INSERT INTO notice(nnum, ntitle, ncontent, cnt, word, rdate, nimage, nimagesaved, nsize)
 VALUES(notice_seq.nextval,'공지1', '첫번째 공지입니다.', 0, '공지1, 첫공지', sysdate, 'notice1.jpg', 'notice1_1.jpg', 1000);
 
+commit;
+
 -- 목록
 SELECT nnum, ntitle, rdate, cnt, adminno
 FROM notice
@@ -53,8 +55,19 @@ ORDER BY nnum DESC;
 -- 조회
 SELECT nnum, ntitle, ncontent, cnt, word, rdate, nimage, nimagesaved, nsize
 FROM notice
-WHERE nnum=2;
+WHERE nnum=3;
 
+-- 수정
+UPDATE notice
+SET ntitle='공지1 수정', ncontent='첫번째 공지 수정입니다.', word='공지1, 첫공지수정', rdate=sysdate, nimage='notice1_u.jpg', nimagesaved='notice_u_1.jpg', nsize=5000
+WHERE nnum=3;
+
+-- 삭제
+DELETE FROM notice
+WHERE nnum=3;
+
+
+commit;
 
 
 

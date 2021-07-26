@@ -160,5 +160,149 @@ public class NoticeCont {
         
     return mav;
   }
+  
+  /**
+   * 수정 폼
+   * http://localhost:9091/notice/update.do?nnum=3
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/notice/update.do", method = RequestMethod.GET)
+  public ModelAndView update(int nnum) {
+    ModelAndView mav = new ModelAndView();
+    
+    NoticeVO noticeVO = this.noticeProc.read_update(nnum);
+    
+    mav.addObject("noticeVO", noticeVO);
+    
+    mav.setViewName("/notice/update"); // /WEB-INF/views/notice/update.jsp
+    
+    return mav; // forward
+  }
+
+  /**
+   * 수정 처리
+   * http://localhost:9091/notice/update.do?nnum=3
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/notice/update.do", method = RequestMethod.POST)
+  public ModelAndView update(HttpServletRequest request, NoticeVO noticeVO) {
+    ModelAndView mav = new ModelAndView();
+    
+ // -------------------------------------------------------------------
+    // 파일 삭제 코드 시작
+    // -------------------------------------------------------------------
+    // 삭제할 파일 정보를 읽어옴.
+    NoticeVO vo = noticeProc.read(noticeVO.getNnum());
+    
+    String nimagesaved = vo.getNimagesaved();
+    long size1 = 0;
+    boolean sw = false;
+    
+    // 완성된 경로 F:/ai8/ws_frame/team6_v2sbm3c_git/src/main/resources/static/notice/storage
+    String upDir =  System.getProperty("user.dir") + "/src/main/resources/static/notice/storage/"; // 절대 경로
+
+    sw = Tool.deleteFile(upDir, nimagesaved);  // Folder에서 1건의 파일 삭제
+    // System.out.println("sw: " + sw);
+    // -------------------------------------------------------------------
+    // 파일 삭제 종료
+    // -------------------------------------------------------------------
+    // -------------------------------------------------------------------
+    // 파일 전송 코드 시작
+    // -------------------------------------------------------------------
+    String nimage = "";          // 원본 파일명 image
+
+    // 완성된 경로 F:/ai8/ws_frame/team6_v2sbm3c_git/src/main/resources/static/notice/storage
+    // String upDir =  System.getProperty("user.dir") + "/src/main/resources/static/notice/storage/"; // 절대 경로
+    
+    // 전송 파일이 없어서도 fnamesMF 객체가 생성됨.
+    // <input type='file' class="form-control" name='nimage1MF' id='nimage1MF' 
+    //           value='' placeholder="파일 선택">
+    MultipartFile mf = noticeVO.getNimage1MF();
+    
+    nimage = mf.getOriginalFilename(); // 원본 파일명
+    long nsize = mf.getSize();  // 파일 크기
+    
+
+    if (nsize > 0) { // 파일 크기 체크
+      // 파일 저장 후 업로드된 파일명이 리턴됨, spring.jsp, spring_1.jpg...
+      nimagesaved = Upload.saveFileSpring(mf, upDir); 
+      
+    }    
+    
+    noticeVO.setNimage(nimage);
+    noticeVO.setNimagesaved(nimagesaved);
+    noticeVO.setNsize(nsize);
+    // -------------------------------------------------------------------
+    // 파일 전송 코드 종료
+    // -------------------------------------------------------------------
+    
+    
+    int cnt = this.noticeProc.update(noticeVO); // 수정 처리
+    mav.addObject("nnum", noticeVO.getNnum());
+    mav.setViewName("redirect:/notice/read.do"); 
+
+    return mav; // forward
+  }
+  
+  /**
+   * 삭제 폼
+   * @param nnum
+   * @return
+   */
+  @RequestMapping(value="/notice/delete.do", method=RequestMethod.GET )
+  public ModelAndView delete(int nnum) { 
+    ModelAndView mav = new  ModelAndView();
+    
+    // 삭제할 정보를 조회하여 확인
+    NoticeVO noticeVO = this.noticeProc.read(nnum);
+    mav.addObject("noticeVO", noticeVO);     
+    mav.setViewName("/notice/delete");  // notice/delete.jsp
+    
+    return mav; 
+  }
+  
+  /**
+   * 삭제 처리 http://localhost:9091/notice/delete.do
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/notice/delete.do", method = RequestMethod.POST)
+  public ModelAndView delete(HttpServletRequest request, int nnum) {
+    ModelAndView mav = new ModelAndView();
+    
+    // -------------------------------------------------------------------
+    // 파일 삭제 코드 시작
+    // -------------------------------------------------------------------
+    // 삭제할 파일 정보를 읽어옴.
+    
+    
+    
+    NoticeVO vo = noticeProc.read(nnum);
+//    System.out.println("nnum: " + vo.getNnum());
+//    System.out.println("nimage: " + vo.getNimage());
+
+    String nimagesaved = vo.getNimagesaved();
+    long nsize = 0;
+    boolean sw = false;
+
+    // 완성된 경로 F:/ai8/ws_frame/team6_v2sbm3c_git/src/main/resources/static/notice/storage
+    String upDir =  System.getProperty("user.dir") + "/src/main/resources/static/notice/storage/"; // 절대 경로
+
+    sw = Tool.deleteFile(upDir, nimagesaved);  // Folder에서 1건의 파일 삭제
+    // System.out.println("sw: " + sw);
+    
+    // -------------------------------------------------------------------
+    // 파일 삭제 종료 시작
+    // -------------------------------------------------------------------
+    
+    int cnt = this.noticeProc.delete(nnum); // DBMS 삭제
+    
+    mav.setViewName("redirect:/notice/list.do"); 
+
+    return mav; // forward
+  }
+  
 }
 

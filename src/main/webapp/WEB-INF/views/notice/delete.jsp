@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<c:set var="nnum" value="${noticeVO.nnum }"/>
 <c:set var="ntitle" value="${noticeVO.ntitle }" />
 <c:set var="ncontent" value="${noticeVO.ncontent }" />
  
@@ -34,9 +35,9 @@
   <ASIDE class="aside_right">
     <A href="./create.do">등록</A>
     <span class='menu_divide' >│</span>
-    <A href="./update.do">수정</A>
+    <A href="./update.do?nnum=${nnum }">수정</A>
     <span class='menu_divide' >│</span>
-    <A href="./delete.do">삭제</A>
+    <A href="./delete.do?nnum=${nnum }">삭제</A>
     <span class='menu_divide' >│</span>
     <A href="javascript:location.reload();">새로고침</A>
   </ASIDE> 
@@ -57,20 +58,27 @@
             </DIV>
           </DIV> 
         </c:if> 
-        <DIV>${noticeVO.ncontent }</DIV>
-      </li>
-      <li class="li_none">
-        <DIV style='text-decoration: none;'>
-          검색어(키워드): ${noticeVO.word }
+        <DIV style='text-align: left; width: 47%; float: left;'>
+          <span style='font-size: 1.5em;'>${ntitle}</span>
+          <br>
+          <FORM name='frm' method='POST' action='./delete.do'>
+              <input type='hidden' name='contentsno' value='${param.nnum}'>
+              
+              <DIV id='panel1' style="width: 40%; text-align: center; margin: 10px auto;"></DIV>
+                    
+              <div class="form-group">   
+                <div class="col-md-12" style='text-align: center; margin: 10px auto;'>
+                  공지 삭제 : ${noticeVO.ntitle }<br><br>
+                  삭제하시겠습니까? 삭제하시면 복구 할 수 없습니다.<br><br>
+                 
+                  <button type = "submit" class="btn btn-info">삭제 진행</button>
+                  <button type = "button" onclick = "history.back()" class="btn btn-info">취소</button>
+                </div>
+              </div>   
+          </FORM>
         </DIV>
+        
       </li>
-      <li class="li_none">
-        <DIV>
-          <c:if test="${noticeVO.nimage.trim().length() > 0 }">
-            첨부 파일: <A href='/download?dir=/notice/storage&filename=${noticeVO.nimagesaved}&downname=${noticeVO.nimage}'>${noticeVO.nimage}</A> (${noticeVO.size_label})  
-          </c:if>
-        </DIV>
-      </li>   
     </ul>
   </fieldset>
 

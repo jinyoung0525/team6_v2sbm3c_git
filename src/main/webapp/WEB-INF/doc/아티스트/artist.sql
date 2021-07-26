@@ -3,18 +3,18 @@
 /**********************************/
 DROP TABLE artist;
 CREATE TABLE artist(
-		artistno                      		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
-		name                          		VARCHAR2(200)		 NOT NULL,
-		fan                           		NUMBER(10)		 DEFAULT 0		 NOT NULL,
-		debut                         		NUMBER(5)		 NOT NULL,
-		seqno                         		NUMBER(7)		 DEFAULT 0		 NOT NULL,
-		genre                         		VARCHAR2(50)		 NOT NULL,
-		nation                        		VARCHAR2(50)		 NOT NULL,
-		type                          		VARCHAR2(50)		 NOT NULL,
-		fname                         		VARCHAR2(100)		 NOT NULL,
-		fupname                       		VARCHAR2(100)		 NOT NULL,
-		thumb                         		VARCHAR2(200)		 NOT NULL,
-		fsize                         		NUMBER(10)		 DEFAULT 0        NOT NULL,
+    artistno                          NUMBER(10)     NOT NULL    PRIMARY KEY,
+    name                              VARCHAR2(200)    NOT NULL,
+    fan                               NUMBER(10)     DEFAULT 0     NOT NULL,
+    debut                             NUMBER(5)    NOT NULL,
+    seqno                             NUMBER(7)    DEFAULT 0     NOT NULL,
+    genre                             VARCHAR2(50)     NOT NULL,
+    nation                            VARCHAR2(50)     NOT NULL,
+    type                              VARCHAR2(50)     NOT NULL,
+    fname                             VARCHAR2(100)    NOT NULL,
+    fupname                           VARCHAR2(100)    NOT NULL,
+    thumb                             VARCHAR2(200)    NOT NULL,
+    fsize                             NUMBER(10)     DEFAULT 0        NOT NULL,
         word                                 VARCHAR2(300)       NULL
 );
 
