@@ -1,13 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
  
 <!DOCTYPE html> 
 <html lang="ko"> 
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>6팀</title>
+<title>MusicBoot - 이용권</title>
  
 <link href="../css/style.css" rel="Stylesheet" type="text/css">
  
@@ -75,16 +76,17 @@ function read_update_ajax(categrpno) {
 <jsp:include page="../menu/top.jsp" />
  
 <DIV class='title_line'>
-  <A href="../product/list.do" class='title_link'>6팀</A>
+  <A href="../product/list.do" class='title_link'>이용권</A>
 </DIV>
 
 <DIV class='content_body'>
+<sec:authorize access="isAuthenticated()">
   <ASIDE class="aside_right">
     <A href="./create.do?">이용권 등록</A>
     <span class='menu_divide' >│</span>
     <A href="javascript:location.reload();">새로고침</A>
   </ASIDE> 
-  
+ </sec:authorize>
   <DIV class='menu_line'></DIV>
   
   <table class="table table-striped" style='width: 100%;'>

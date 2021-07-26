@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <c:set var="productno" value="${productVO.product_no }" />
 <c:set var="name" value="${productVO.product_name }" />
@@ -14,7 +15,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>팀6</title>
+<title>MusicBoot</title>
  
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
  
@@ -80,16 +81,21 @@ function Kpay() {
   <A href="../product/read.do?productno=${productno }" class='title_link'>${name }</A>
 </DIV>
 
-<DIV class='content_body'>
+
+
+
+
+  <DIV class='content_body'>
+  <sec:authorize access="isAuthenticated()">
+
   <ASIDE class="aside_right">
     <A href="./product_update.do?product_no=${productno}">상품 수정</A>
     <span class='menu_divide' >│</span>
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>
     <A href="./product/delete.do">상품삭제</A>
-    
   </ASIDE>
-  
+  </sec:authorize>
 	
   
   <DIV class='menu_line'></DIV>
