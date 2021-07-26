@@ -32,6 +32,12 @@ public class AlbumProc implements AlbumProcInter {
     List<AlbumVO> list = this.albumDAO.list_all();
     return list;
   }
+  
+  @Override
+  public List<AlbumVO> list_all_join() {
+    List<AlbumVO> list = this.albumDAO.list_all_join();
+    return list;
+  }
 
   @Override
   public List<AlbumVO> list_by_artistno(int artistno) {
@@ -251,5 +257,7 @@ public class AlbumProc implements AlbumProcInter {
     int cnt = this.albumDAO.update_likey(albumno);
     return cnt;
   }
+
+  
 
 }

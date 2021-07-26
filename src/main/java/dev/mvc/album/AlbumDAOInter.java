@@ -26,6 +26,12 @@ public interface AlbumDAOInter {
   public List<AlbumVO> list_by_artistno(int artistno);   
   
   /**
+   * Artist + Album join, 연결 목록
+   * @return
+   */
+  public List<AlbumVO> list_all_join();  
+  
+  /**
    * 카테고리별 검색 목록
    * @param hashMap
    * @return
@@ -54,7 +60,7 @@ public interface AlbumDAOInter {
   public AlbumVO read(int albumno);
   
   /**
-   * 텍스트 정보 수정
+   * 수정
    * @param albumVO
    * @return
    */

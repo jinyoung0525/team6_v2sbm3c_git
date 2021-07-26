@@ -22,6 +22,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ORDER BY albumno DESC
   </select>
   
+  <!-- Categrp + Cate join, 연결 목록 -->
+  <select id="list_all_join" resultType="dev.mvc.album.AlbumVO">
+    SELECT r.artistno as r_artistno, r.name as r_name,
+           c.albumno, c.artistno, c.title, c.kind, c.release, c.genre, c.enter, c.likey, c.intro, c.detail, c.fname, c.thumb, c.fupname, c.fsize
+    FROM artist r, album c
+    WHERE r.artistno = c.artistno
+    ORDER BY artistno ASC, albumno ASC
+  </select>
+  
   <!-- 카테고리별 검색 목록 -->
   <select id="list_by_artistno_search" resultType="dev.mvc.album.AlbumVO" 
              parameterType="HashMap">

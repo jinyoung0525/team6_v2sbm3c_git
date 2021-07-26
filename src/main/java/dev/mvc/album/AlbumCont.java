@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.artist.ArtistProcInter;
 import dev.mvc.artist.ArtistVO;
-
 import dev.mvc.tool.Tool;
 import dev.mvc.tool.Upload;
 
@@ -176,6 +175,22 @@ public ModelAndView list_by_artistno(int artistno) {
   mav.addObject("list", list); // request.setAttribute("list", list);
 
   mav.setViewName("/album/list_by_artistno"); // /album/list_by_artistno.jsp
+  return mav;
+}
+
+/**
+ * Artist + Album join, 연결 목록
+ * http://localhost:9091/album/list_all_join.do 
+ * @return
+ */
+@RequestMapping(value="/album/list_all_join.do", method=RequestMethod.GET )
+public ModelAndView list_all_join() {
+  ModelAndView mav = new ModelAndView();
+  
+  List<AlbumVO> list = this.albumProc.list_all_join();
+  mav.addObject("list", list); // request.setAttribute("list", list);
+
+  mav.setViewName("/album/list_all_join"); // /cate/list_all_join.jsp
   return mav;
 }
 

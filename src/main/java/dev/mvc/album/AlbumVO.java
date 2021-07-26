@@ -179,5 +179,14 @@ public class AlbumVO {
     this.fsize_label = fsize_label;
   }
   
+  @Override
+  public String toString() {
+    return "[r_artistno=" + r_artistno + ", r_name=" + r_name + ", albumno=" + albumno + ", title=" + title
+        + ", kind=" + kind + ", release=" + release + ", genre=" + genre + ", enter=" + enter + ", likey=" + likey
+        + ", intro=" + intro + ", detail=" + detail + ", fname=" + fname + ", thumb=" + thumb + ", fupname=" + fupname
+        + ", fsize=" + fsize + ", artistno=" + artistno + ", word=" + word + ", fnameMF=" + fnameMF + ", fsize_label="
+        + fsize_label + "]";
+  }
+  
   
 }

@@ -26,6 +26,12 @@ public interface AlbumProcInter {
   public List<AlbumVO> list_by_artistno(int artistno);   
   
   /**
+   * Artist + Album join, 연결 목록
+   * @return
+   */
+  public List<AlbumVO> list_all_join();  
+  
+  /**
    * 카테고리별 검색 목록
    * @param hashMap
    * @return
