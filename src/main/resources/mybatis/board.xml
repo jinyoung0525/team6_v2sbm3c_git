@@ -6,25 +6,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="dev.mvc.board.BoardDAOInter"> 
   <insert id="create" parameterType="dev.mvc.board.BoardVO">
-        INSERT INTO board(bnum, btitle, bcontent, passwd, word, 
-                                            rdate, image, imagesaved, imagesize, MEMBERNO)
-        VALUES(board_seq.nextval, #{btitle}, #{bcontent}, #{passwd}, #{word}, 
-                                            sysdate, #{image}, #{imagesaved}, #{imagesize}, #{MEMBERNO})
+        INSERT INTO board(bnum, btitle, bcontent, recom, cnt, replycnt, passwd, 
+                                    word, rdate, image, imagesaved, imagesize)
+        VALUES(board_seq.nextval, #{btitle}, #{bcontent}, #{recom}, #{cnt}, #{replycnt}, #{passwd}, 
+                     #{word}, sysdate, #{image}, #{imagesaved}, #{imagesize});
 
   </insert>
 
 
   <select id="list" resultType="dev.mvc.board.BoardVO" parameterType="int">
-    SELECT bnum, btitle, rdate, cnt, MEMBERNO
-    FROM board
-    ORDER BY bnum DESC
-  
+      SELECT bnum, btitle, bcontent, recom, cnt, replycnt,  rdate, memberno
+      FROM board
+      ORDER BY bnum DESC
   </select>
   
   <select id="read" resultType="dev.mvc.board.BoardVO" parameterType="int">
-    SELECT bnum, btitle, bcontent, passwd, recom, cnt, replycnt, word, rdate, image, imagesaved, imagesize, MEMBERNO
+    SELECT bnum, btitle, bcontent, recom, cnt, replycnt, word, rdate, image, imagesaved, imagesize
     FROM board
     WHERE bnum=#{bnum}
   </select>
+  
+  <update id="update" parameterType="dev.mvc.board.BoardVO">
+    UPDATE board
+    SET btitle=#{btitle}, bcontent=#{bcontent}, word=#{word}, rdate=sysdate, 
+          image=#{image}, imagesaved=#{imagesaved}, imagesize=#{imagesize}
+    WHERE bnum=#{bnum}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    DELETE FROM board
+    WHERE  bnum=#{bnum}
+  </delete>
          
 </mapper> 

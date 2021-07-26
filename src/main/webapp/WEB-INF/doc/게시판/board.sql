@@ -5,22 +5,21 @@
 DROP TABLE board;
 
 CREATE TABLE board(
-    bnum NUMBER(7) NOT NULL PRIMARY KEY,
-    btitle VARCHAR2(300) NOT NULL,
-    bcontent CLOB NOT NULL,
-    recom NUMBER(7) DEFAULT 0 NOT NULL,
-    cnt NUMBER(7) DEFAULT 0 NOT NULL,
-    replycnt NUMBER(7) DEFAULT 0 NOT NULL,
-    passwd VARCHAR2(15) NOT NULL,
-    word VARCHAR2(300) NULL,
-    rdate DATE NOT NULL,
-    image VARCHAR2(100) NULL,
-    imagesaved VARCHAR2(100) NULL,
-    imagesize NUMBER(10) NULL,
-    memberno INTEGER(10) NOT NULL,
+    bnum                              NUMBER(7)    NOT NULL    PRIMARY KEY,
+    btitle                            VARCHAR2(300)    NOT NULL,
+    bcontent                          CLOB     NOT NULL,
+    recom                             NUMBER(7)    DEFAULT 0     NOT NULL,
+    cnt                               NUMBER(7)    DEFAULT 0     NOT NULL,
+    replycnt                          NUMBER(7)    DEFAULT 0     NOT NULL,
+    passwd                            VARCHAR2(15)     NOT NULL,
+    word                              VARCHAR2(300)    NULL ,
+    rdate                             DATE     NULL ,
+    image                             VARCHAR2(100)    NULL ,
+    imagesaved                        VARCHAR2(100)    NULL ,
+    imagesize                         NUMBER(10)     NULL ,
+    memberno                          NUMBER(10)     NULL ,
   FOREIGN KEY (memberno) REFERENCES member (memberno)
 );
-
 
 COMMENT ON TABLE board is '게시판';
 COMMENT ON COLUMN board.bnum is '글번호';
@@ -38,6 +37,7 @@ COMMENT ON COLUMN board.imagesize is '이미지크기';
 COMMENT ON COLUMN board.memberno is '회원 번호';
 
 
+
 DROP SEQUENCE board_seq;
 
 CREATE SEQUENCE board_seq
@@ -48,20 +48,32 @@ CREATE SEQUENCE board_seq
   NOCYCLE;                      -- 다시 1부터 생성되는 것을 방지
   
   
-  
+
 -- 등록
-INSERT INTO board(bnum, btitle, bcontent, passwd, word, rdate, image, imagesaved, imagesize, memberno)
-VALUES(board_seq, '게시글1', '첫번째 게시글입니다.', '1234', '첫글, 첫번째', sysdate, 'first.jpg', 'first_1.jpg', 1000, 1);
+INSERT INTO board(bnum, btitle, bcontent, recom, cnt, replycnt, passwd, word, rdate, image, imagesaved, imagesize)
+VALUES(board_seq.nextval,'게시글1', '첫번째 게시글입니다.', 0, 0, 0, '1234', '첫글, 첫번째', sysdate, 'board1.jpg', 'board1_1.jpg', 10);
+
 
 -- 목록
-SELECT bnum, btitle, rdate, cnt, memberno
+SELECT bnum, btitle, bcontent, recom, cnt, replycnt,  rdate, memberno
 FROM board
 ORDER BY bnum DESC;
 
 -- 조회
-SELECT bnum, btitle, bcontent, passwd, recom, cnt, replycnt, word, rdate, image, imagesaved, imagesize, memberno
+SELECT bnum, btitle, bcontent, recom, cnt, replycnt, word, rdate, image, imagesaved, imagesize
 FROM board
 WHERE bnum=1;
 
+-- 수정
+UPDATE board
+SET btitle='게시글1 수정', bcontent='게시글1 수정합니다.', word='첫글, 첫번째, 수정', rdate=sysdate, image='board1_u.jpg', imagesaved='board1_u_1.jpg', imagesize=5000
+WHERE bnum=1;
+
+-- 삭제
+DELETE FROM board
+WHERE  bnum=1;
+
+
+commit;
 
 

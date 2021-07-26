@@ -39,6 +39,8 @@
     <span class='menu_divide' >│</span>
     <A href="./delete.do?nnum=${nnum }">삭제</A>
     <span class='menu_divide' >│</span>
+    <A href="./list.do">목록</A>
+    <span class='menu_divide' >│</span>
     <A href="javascript:location.reload();">새로고침</A>
   </ASIDE> 
   
@@ -62,7 +64,7 @@
           <span style='font-size: 1.5em;'>${ntitle}</span>
           <br>
           <FORM name='frm' method='POST' action='./delete.do'>
-              <input type='hidden' name='contentsno' value='${param.nnum}'>
+              <input type='hidden' name='nnum' value='${param.nnum}'>
               
               <DIV id='panel1' style="width: 40%; text-align: center; margin: 10px auto;"></DIV>
                     

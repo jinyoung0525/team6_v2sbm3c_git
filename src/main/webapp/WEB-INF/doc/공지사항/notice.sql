@@ -1,6 +1,6 @@
 
 /**********************************/
-/* Table Name: ê³µì§€ì‚¬í•­ */
+/* Table Name: °øÁö»çÇ× */
 /**********************************/
 DROP TABLE notice;
 CREATE TABLE notice(
@@ -17,52 +17,51 @@ CREATE TABLE notice(
   FOREIGN KEY (adminno) REFERENCES admin (adminno)
 );
 
-COMMENT ON TABLE notice is 'ê³µì§€ì‚¬í•­';
-COMMENT ON COLUMN notice.nnum is 'ê³µì§€ë²ˆí˜¸';
-COMMENT ON COLUMN notice.ntitle is 'ê³µì§€ì œëª©';
-COMMENT ON COLUMN notice.ncontent is 'ê³µì§€ë‚´ìš©';
-COMMENT ON COLUMN notice.cnt is 'ì¡°íšŒìˆ˜';
-COMMENT ON COLUMN notice.word is 'ê²€ìƒ‰ì–´';
-COMMENT ON COLUMN notice.rdate is 'ë“±ë¡ì¼';
-COMMENT ON COLUMN notice.nimage is 'ì´ë¯¸ì§€';
-COMMENT ON COLUMN notice.nimagesaved is 'ì €ì¥ëœì´ë¯¸ì§€';
-COMMENT ON COLUMN notice.nsize is 'ì´ë¯¸ì§€í¬ê¸°';
-COMMENT ON COLUMN notice.adminno is 'ê´€ë¦¬ì ë²ˆí˜¸';
+COMMENT ON TABLE notice is '°øÁö»çÇ×';
+COMMENT ON COLUMN notice.nnum is '°øÁö¹øÈ£';
+COMMENT ON COLUMN notice.ntitle is '°øÁöÁ¦¸ñ';
+COMMENT ON COLUMN notice.ncontent is '°øÁö³»¿ë';
+COMMENT ON COLUMN notice.cnt is 'Á¶È¸¼ö';
+COMMENT ON COLUMN notice.word is '°Ë»ö¾î';
+COMMENT ON COLUMN notice.rdate is 'µî·ÏÀÏ';
+COMMENT ON COLUMN notice.nimage is 'ÀÌ¹ÌÁö';
+COMMENT ON COLUMN notice.nimagesaved is 'ÀúÀåµÈÀÌ¹ÌÁö';
+COMMENT ON COLUMN notice.nsize is 'ÀÌ¹ÌÁöÅ©±â';
+COMMENT ON COLUMN notice.adminno is '°ü¸®ÀÚ ¹øÈ£';
 
 
 DROP SEQUENCE notice_seq;
 
 CREATE SEQUENCE notice_seq
-  START WITH 1                -- ì‹œì‘ ë²ˆí˜¸
-  INCREMENT BY 1            -- ì¦ê°€ê°’
-  MAXVALUE 9999999999  -- ìµœëŒ€ê°’: 9999999999 --> NUMBER(10) ëŒ€ì‘
-  CACHE 2                        -- 2ë²ˆì€ ë©”ëª¨ë¦¬ì—ì„œë§Œ ê³„ì‚°
-  NOCYCLE;                      -- ë‹¤ì‹œ 1ë¶€í„° ìƒì„±ë˜ëŠ” ê²ƒì„ ë°©ì§€
+  START WITH 1                -- ½ÃÀÛ ¹øÈ£
+  INCREMENT BY 1            -- Áõ°¡°ª
+  MAXVALUE 9999999999  -- ÃÖ´ë°ª: 9999999999 --> NUMBER(10) ´ëÀÀ
+  CACHE 2                        -- 2¹øÀº ¸Ş¸ğ¸®¿¡¼­¸¸ °è»ê
+  NOCYCLE;                      -- ´Ù½Ã 1ºÎÅÍ »ı¼ºµÇ´Â °ÍÀ» ¹æÁö
   
   
   
--- ë“±ë¡
+-- µî·Ï
 INSERT INTO notice(nnum, ntitle, ncontent, cnt, word, rdate, nimage, nimagesaved, nsize)
-VALUES(notice_seq.nextval,'ê³µì§€1', 'ì²«ë²ˆì§¸ ê³µì§€ì…ë‹ˆë‹¤.', 0, 'ê³µì§€1, ì²«ê³µì§€', sysdate, 'notice1.jpg', 'notice1_1.jpg', 1000);
+VALUES(notice_seq.nextval,'°øÁö1', 'Ã¹¹øÂ° °øÁöÀÔ´Ï´Ù.', 0, '°øÁö1, Ã¹°øÁö', sysdate, 'notice1.jpg', 'notice1_1.jpg', 1000);
 
-commit;
 
--- ëª©ë¡
+-- ¸ñ·Ï
 SELECT nnum, ntitle, rdate, cnt, adminno
 FROM notice
 ORDER BY nnum DESC;
 
--- ì¡°íšŒ
+-- Á¶È¸
 SELECT nnum, ntitle, ncontent, cnt, word, rdate, nimage, nimagesaved, nsize
 FROM notice
 WHERE nnum=3;
 
--- ìˆ˜ì •
+-- ¼öÁ¤
 UPDATE notice
-SET ntitle='ê³µì§€1 ìˆ˜ì •', ncontent='ì²«ë²ˆì§¸ ê³µì§€ ìˆ˜ì •ì…ë‹ˆë‹¤.', word='ê³µì§€1, ì²«ê³µì§€ìˆ˜ì •', rdate=sysdate, nimage='notice1_u.jpg', nimagesaved='notice_u_1.jpg', nsize=5000
+SET ntitle='°øÁö1 ¼öÁ¤', ncontent='Ã¹¹øÂ° °øÁö ¼öÁ¤ÀÔ´Ï´Ù.', word='°øÁö1, Ã¹°øÁö¼öÁ¤', rdate=sysdate, nimage='notice1_u.jpg', nimagesaved='notice_u_1.jpg', nsize=5000
 WHERE nnum=3;
 
--- ì‚­ì œ
+-- »èÁ¦
 DELETE FROM notice
 WHERE nnum=3;
 

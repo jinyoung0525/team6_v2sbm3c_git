@@ -197,7 +197,7 @@ public class NoticeCont {
     NoticeVO vo = noticeProc.read(noticeVO.getNnum());
     
     String nimagesaved = vo.getNimagesaved();
-    long size1 = 0;
+    long nsize = 0;
     boolean sw = false;
     
     // 완성된 경로 F:/ai8/ws_frame/team6_v2sbm3c_git/src/main/resources/static/notice/storage
@@ -222,7 +222,7 @@ public class NoticeCont {
     MultipartFile mf = noticeVO.getNimage1MF();
     
     nimage = mf.getOriginalFilename(); // 원본 파일명
-    long nsize = mf.getSize();  // 파일 크기
+    nsize = mf.getSize();  // 파일 크기
     
 
     if (nsize > 0) { // 파일 크기 체크

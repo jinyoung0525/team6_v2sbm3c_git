@@ -1,19 +1,19 @@
 package dev.mvc.board;
 import org.springframework.web.multipart.MultipartFile;
   /*
-   * bnum NUMBER(7) NOT NULL PRIMARY KEY,
-    btitle VARCHAR2(300) NOT NULL,
-    bcontent CLOB NOT NULL,
-    recom NUMBER(7) DEFAULT 0 NOT NULL,
-    cnt NUMBER(7) DEFAULT 0 NOT NULL,
-    replycnt NUMBER(7) DEFAULT 0 NOT NULL,
-    passwd VARCHAR2(15) NOT NULL,
-    word VARCHAR2(300) NULL,
-    rdate DATE NOT NULL,
-    image VARCHAR2(100) NULL,
-    imagesaved VARCHAR2(100) NULL,
-    size NUMBER(10) NULL,
-    MEMBERNO NUMBER(10) NOT NULL,
+   * bnum                              NUMBER(7)    NOT NULL    PRIMARY KEY,
+    btitle                            VARCHAR2(300)    NOT NULL,
+    bcontent                          CLOB     NOT NULL,
+    recom                             NUMBER(7)    DEFAULT 0     NOT NULL,
+    cnt                               NUMBER(7)    DEFAULT 0     NOT NULL,
+    replycnt                          NUMBER(7)    DEFAULT 0     NOT NULL,
+    passwd                            VARCHAR2(15)     NOT NULL,
+    word                              VARCHAR2(300)    NULL ,
+    rdate                             DATE     NULL ,
+    image                             VARCHAR2(100)    NULL ,
+    imagesaved                        VARCHAR2(100)    NULL ,
+    imagesize                         NUMBER(10)     NULL ,
+    memberno                          NUMBER(10)     NULL ,
   */
 
 public class BoardVO {
@@ -29,8 +29,10 @@ public class BoardVO {
   private String rdate="";
   private String image="";
   private String imagesaved="";
-  private long size;
-  private int MEMBERNO;
+
+
+  private long imagesize;
+  private int memberno;
   
   public int getBnum() {
     return bnum;
@@ -98,19 +100,19 @@ public class BoardVO {
   public void setImagesaved(String imagesaved) {
     this.imagesaved = imagesaved;
   }
-  public long getSize() {
-    return size;
+
+  public long getImagesize() {
+    return imagesize;
   }
-  public void setSize(long size) {
-    this.size = size;
+  public void setImagesize(long imagesize) {
+    this.imagesize = imagesize;
   }
-  public int getMEMBERNO() {
-    return MEMBERNO;
+  public int getMemberno() {
+    return memberno;
   }
-  public void setMEMBERNO(int mEMBERNO) {
-    MEMBERNO = mEMBERNO;
+  public void setMemberno(int memberno) {
+    this.memberno = memberno;
   }
-  
   
   /** 
   이미지 MultipartFile 

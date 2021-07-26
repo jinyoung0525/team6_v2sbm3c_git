@@ -34,9 +34,11 @@
   <ASIDE class="aside_right">
     <A href="./create.do">등록</A>
     <span class='menu_divide' >│</span>
-    <A href="./update.do">수정</A>
+    <A href="./update.do?nnum=${nnum }">수정</A>
     <span class='menu_divide' >│</span>
-    <A href="./delete.do">삭제</A>
+    <A href="./delete.do?nnum=${nnum }">삭제</A>
+    <span class='menu_divide' >│</span>
+    <A href="./list.do">목록</A>
     <span class='menu_divide' >│</span>
     <A href="javascript:location.reload();">새로고침</A>
   </ASIDE> 

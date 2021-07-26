@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<c:set var="bnum" value="${boardVO.bnum }"/>
 <c:set var="btitle" value="${boardVO.btitle }" />
 <c:set var="bcontent" value="${boardVO.bcontent }" />
  
@@ -28,7 +29,7 @@
 <body>
 <jsp:include page="../menu/top.jsp" />
  
-<DIV class='title_line'>게시판</DIV>
+<DIV class='title_line'><A href="./board/list.do">게시판</A></DIV>
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
@@ -59,20 +60,27 @@
             </DIV>
           </DIV> 
         </c:if> 
-        <DIV>${boardVO.bcontent }</DIV>
-      </li>
-      <li class="li_none">
-        <DIV style='text-decoration: none;'>
-          검색어(키워드): ${boardVO.word }
+        <DIV style='text-align: left; width: 47%; float: left;'>
+          <span style='font-size: 1.5em;'>${btitle}</span>
+          <br>
+          <FORM name='frm' method='POST' action='./delete.do'>
+              <input type='hidden' name='bnum' value='${param.bnum}'>
+              
+              <DIV id='panel1' style="width: 40%; text-align: center; margin: 10px auto;"></DIV>
+                    
+              <div class="form-group">   
+                <div class="col-md-12" style='text-align: center; margin: 10px auto;'>
+                  게시글 삭제 : ${boardVO.btitle }<br><br>
+                  삭제하시겠습니까? 삭제하시면 복구 할 수 없습니다.<br><br>
+                 
+                  <button type = "submit" class="btn btn-info">삭제 진행</button>
+                  <button type = "button" onclick = "history.back()" class="btn btn-info">취소</button>
+                </div>
+              </div>   
+          </FORM>
         </DIV>
+        
       </li>
-      <li class="li_none">
-        <DIV>
-          <c:if test="${boardVO.image.trim().length() > 0 }">
-            첨부 파일: <A href='/download?dir=/board/storage&filename=${boardVO.imagesaved}&downname=${boardVO.image}'>${boardVO.image}</A> (${boardVO.size_label})  
-          </c:if>
-        </DIV>
-      </li>   
     </ul>
   </fieldset>
 
