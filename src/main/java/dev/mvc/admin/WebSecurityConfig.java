@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/**/msg.do").permitAll()
         .antMatchers("/**/read.do").permitAll()
         
-        // <모두 가능>
+       
         // 앨범
         .antMatchers("/album/**").permitAll() 
         // 아티스트
@@ -47,6 +47,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 이용권
         .antMatchers("/product/**").permitAll() 
         .antMatchers("/pay/**").permitAll() 
+        // 음악
+        .antMatchers("/music/**").permitAll() 
         
         // <관리자만 가능>
         // 앨범
