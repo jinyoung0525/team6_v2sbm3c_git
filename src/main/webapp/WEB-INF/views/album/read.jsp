@@ -37,6 +37,7 @@ function update_likey_ajax(albumno) {
   var params = "";
   // params = $('#frm').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
   params = 'albumno=' + albumno; // 공백이 값으로 있으면 안됨.
+  params += '&${ _csrf.parameterName }=${ _csrf.token }';
   $.ajax(
     {
       url: '/album/update_likey_ajax.do',
@@ -132,6 +133,7 @@ function update_likey_ajax(albumno) {
             <span style="font-size: 1.0em;">발매일: ${release }</span><br>
             <span style="font-size: 1.0em;">장르: ${genre }</span><br>
             <span style="font-size: 1.0em;">기획사: ${enter }</span><br>
+            <span style="font-size: 1.8em;"><a href='../music/list_by_albumno_search_paging.do?albumno=${param.albumno }&word=&now_page=1'>수록곡 바로가기</a></span><br>
           </DIV> 
         </c:if> 
         <DIV><strong>${intro }</strong></DIV><br>
