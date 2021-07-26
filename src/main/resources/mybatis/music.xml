@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.music.MusicDAOInter"> 
+  <insert id="create" parameterType="dev.mvc.music.MusicVO">
+    <selectKey keyProperty="songno" resultType="int" order="BEFORE">
+      SELECT music_seq.nextval FROM dual
+    </selectKey>
+    
+     INSERT INTO music(songno, title, mp3, mp4, size3, size4, seqno, lyrics, likey, albumno, memberno, word)
+     VALUES(#{songno}, #{title}, #{mp3}, #{mp4}, #{size3}, #{size4}, #{seqno}, #{lyrics}, #{likey}, #{albumno}, #{memberno}, #{word})
+  </insert>
+  
+   <!-- albumno 별 목록 -->
+  <select id="list_by_albumno" resultType="dev.mvc.music.MusicVO" parameterType="int">
+   SELECT songno, title, mp3, mp4, size3, size4, seqno, lyrics, likey, albumno, memberno
+   FROM music
+   WHERE albumno = #{albumno}
+   ORDER BY songno ASC
+  </select>
+  
+  <select id="list_by_albumno_search" resultType="dev.mvc.music.MusicVO" 
+             parameterType="HashMap">
+    SELECT songno, title, mp3, mp4, size3, size4, seqno, lyrics, likey, albumno, memberno
+    FROM music
+    <choose>
+      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
+        WHERE albumno=#{albumno}
+      </when>
+      <otherwise> <!-- 검색하는 경우 -->
+        WHERE word LIKE '%' || #{word} || '%'
+        OR title LIKE '%' || #{word} || '%' 
+        OR lyrics LIKE '%' || #{word} || '%'                                        
+      </otherwise>
+    </choose>
+    ORDER BY songno DESC   
+  </select>
+   
+  <!-- 카테고리별 검색 레코드 갯수 -->
+  <select id="search_count" resultType="int" parameterType="HashMap">
+    SELECT COUNT(*) as cnt
+    FROM music
+    <choose>
+      <when test="word == null or word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+        WHERE albumno=#{albumno}
+      </when>
+      <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
+        WHERE word LIKE '%' || #{word} || '%'
+        OR title LIKE '%' || #{word} || '%' 
+        OR lyrics LIKE '%' || #{word} || '%'
+      </otherwise>
+    </choose>
+  </select>
+  
+   <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->   
+  <select id="list_by_albumno_search_paging" 
+             resultType="dev.mvc.music.MusicVO" parameterType="HashMap">
+   SELECT songno, title, mp3, mp4, size3, size4, seqno, lyrics, likey, albumno, memberno, r
+   FROM (
+           SELECT songno, title, mp3, mp4, size3, size4, seqno, lyrics, likey, albumno, memberno, rownum as r
+           FROM (
+                     SELECT songno, title, mp3, mp4, size3, size4, seqno, lyrics, likey, albumno, memberno
+                     FROM music
+                        <choose>
+                          <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
+                             WHERE albumno=#{albumno}
+                          </when>
+                          <otherwise>
+                            WHERE word LIKE '%' || #{word} || '%'
+                            OR title LIKE '%' || #{word} || '%' 
+                            OR lyrics LIKE '%' || #{word} || '%'
+                          </otherwise>
+                        </choose>
+                        ORDER BY songno DESC
+               )
+    )
+    WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]>
+     
+<!--  1 page: WHERE r >= 1 AND r <= 10; 
+       2 page: WHERE r >= 11 AND r <= 20;
+       3 page: WHERE r >= 21 AND r <= 30; -->
+     
+  </select>
+  
+    <!-- 일반적인 조회 -->
+  <select id="read" resultType="dev.mvc.music.MusicVO" parameterType="int">
+   SELECT songno, title, mp3, mp4, size3, size4, seqno, lyrics, likey, albumno, memberno
+   FROM music
+   WHERE songno=#{songno}
+  </select>
+  
+   <!-- 수정 -->
+  <update id="update_music" parameterType="dev.mvc.music.MusicVO">
+    UPDATE music
+    SET songno=#{songno}, title=#{title}, mp3=#{mp3}, mp4=#{mp4}, 
+          size3=#{size3}, size4=#{size4}, lyrics=#{lyrics}, word=#{word}
+    WHERE songno = #{songno}
+  </update>
+  
+  <!-- 삭제 -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM music
+    WHERE songno=#{songno}
+  </delete>
+  
+  <!-- 추천 -->
+  <update id="update_likey" parameterType="int">
+    UPDATE music
+    SET likey = likey + 1
+    WHERE songno = #{songno}
+  </update>
+  
+  
+ </mapper>
