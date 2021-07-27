@@ -35,23 +35,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         
        
         // 앨범
-        .antMatchers("/album/**").permitAll() 
+        .antMatchers("/album/images/**").permitAll() 
+        .antMatchers("/album/storage/**").permitAll() 
         .antMatchers("/album/list_all_join.do").permitAll() 
         .antMatchers("/album/list_by_artistno_search_paging.do").permitAll() 
         .antMatchers("/album/read.do").permitAll() 
         
         // 아티스트
-        .antMatchers("/artist/**").permitAll()
+        .antMatchers("/artist/images/**").permitAll()
+        .antMatchers("/artist/storage/**").permitAll()
         .antMatchers("/artist/list_by_artistno_grid.do").permitAll()
         .antMatchers("/artist/list_by_artistno_search_paging.do").permitAll()
         .antMatchers("/artist/read.do").permitAll()
         
         // 공지사항
-        .antMatchers("/notice/**").permitAll()
+        .antMatchers("/notice/storage/**").permitAll()
         .antMatchers("/notice/list.do").permitAll()  // 공지사항 목록까지는 모두 허용
         .antMatchers("/notice/read.do").permitAll() // 공지사항 글 조회부터는 회원과 관리자만 가능
+        
         // 게시판
-        .antMatchers("/board/**").permitAll() 
         .antMatchers("/board/list.do").permitAll() // 게시판 목록까지는 모두 허용
         .antMatchers("/board/read.do").permitAll() // 게시판 글 조회부터는 회원과 관리자만 가능
         .antMatchers("/board/create.do").permitAll()
@@ -66,13 +68,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/member/login.do").permitAll()
         .antMatchers("/member/login_ajax.do").permitAll()
         .antMatchers("/member/session.do").permitAll()
+        .antMatchers("/member/images/**").permitAll()
         
         // 이용권
         .antMatchers("/product/**").permitAll() 
         .antMatchers("/pay/**").permitAll() 
         
         // 음악
-        .antMatchers("/music/**").permitAll() 
+        .antMatchers("/music/**").permitAll()
+        .antMatchers("/music/images/**").permitAll()
+        .antMatchers("/music/storage/**").permitAll()
+        
         
         // <관리자만 가능>
         // 앨범
