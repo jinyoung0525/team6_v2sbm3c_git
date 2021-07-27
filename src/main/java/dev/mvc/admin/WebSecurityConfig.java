@@ -102,6 +102,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //공지사항
         .antMatchers("/notice/create.do").hasRole("ADMIN") 
         .antMatchers("/notice/delete.do").hasRole("ADMIN") 
+        .antMatchers("/notice/update.do").hasRole("ADMIN") 
         // 회원관리
         .antMatchers("/member/list.do").hasRole("ADMIN")
         .antMatchers("/member/read.do").hasRole("ADMIN")
