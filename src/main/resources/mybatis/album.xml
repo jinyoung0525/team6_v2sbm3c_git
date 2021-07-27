@@ -14,6 +14,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      VALUES(#{albumno}, #{title}, #{kind}, #{release}, #{genre}, #{enter}, #{likey}, #{intro}, #{detail}, #{fname}, #{thumb}, #{fupname}, #{fsize}, #{artistno}, #{word})
   </insert>
   
+  <insert id="create_join" parameterType="dev.mvc.album.AlbumVO">
+    <selectKey keyProperty="albumno" resultType="int" order="BEFORE">
+      SELECT album_seq.nextval FROM dual
+    </selectKey>
+    
+     INSERT INTO album(albumno, title, kind, release, genre, enter, likey, intro, detail, fname, thumb, fupname, fsize,artistno,word)
+     VALUES(#{albumno}, #{title}, #{kind}, #{release}, #{genre}, #{enter}, #{likey}, #{intro}, #{detail}, #{fname}, #{thumb}, #{fupname}, #{fsize}, #{artistno}, #{word})
+  </insert>
+  
   <!-- artistno 별 목록 -->
   <select id="list_by_artistno" resultType="dev.mvc.album.AlbumVO" parameterType="int">
     SELECT albumno, title, kind, release, genre, enter, likey, intro, detail, fname, thumb, fupname, fsize, artistno

@@ -149,6 +149,99 @@ public ModelAndView create(HttpServletRequest request, AlbumVO albumVO) { // alb
   return mav; // forward
 }
 
+//http://localhost:9091/album/create.do?artistno=1
+/**
+* 조인 등록 폼
+* @return
+*/
+@RequestMapping(value="/album/create_join.do", method=RequestMethod.GET )
+public ModelAndView create_join() {
+ ModelAndView mav = new ModelAndView();
+ mav.setViewName("/album/create_join"); // /WEB-INF/views/album/create.jsp
+ 
+ return mav; // forward
+}
+
+//http://localhost:9091/album/create_join.do
+/**
+* 조인 등록 처리
+* @param albumVO
+* @return
+*/
+@RequestMapping(value="/album/create_join.do", method=RequestMethod.POST )
+public ModelAndView create_join(HttpServletRequest request, AlbumVO albumVO) { // albumVO 자동 생성, Form -> VO
+// ArtistVO albumVO <FORM> 태그의 값으로 자동 생성됨.
+// request.setAttribute("albumVO", albumVO); 자동 실행
+
+ModelAndView mav = new ModelAndView();
+
+// -------------------------------------------------------------------
+// 파일 전송 코드 시작
+// -------------------------------------------------------------------
+String fname = "";          // 원본 파일명 image
+String fupname = "";  // 저장된 파일명, image
+String thumb = "";     // preview image
+
+// 기준 경로 확인
+String user_dir = System.getProperty("user.dir");
+System.out.println("--> User dir: " + user_dir);
+//  --> User dir: F:\ai8\ws_frame\resort_v1sbm3a
+
+// 파일 접근임으로 절대 경로 지정, static 지정
+// 완성된 경로 F:/ai8/ws_frame/covid/src/main/resources/static/contents/storage
+String upDir =  user_dir + "/src/main/resources/static/album/storage/"; // 절대 경로
+
+// 전송 파일이 없어서도 fnamesMF 객체가 생성됨.
+// <input type='file' class="form-control" name='file1MF' id='file1MF' 
+//           value='' placeholder="파일 선택">
+MultipartFile mf = albumVO.getFnameMF();
+
+fname = mf.getOriginalFilename(); // 원본 파일명
+long fsize = mf.getSize();  // 파일 크기
+
+if (fsize > 0) { // 파일 크기 체크
+  // 파일 저장 후 업로드된 파일명이 리턴됨, spring.jsp, spring_1.jpg...
+  fupname = Upload.saveFileSpring(mf, upDir); 
+  
+  if (Tool.isImage(fupname)) { // 이미지인지 검사
+    // thumb 이미지 생성후 파일명 리턴됨, width: 200, height: 150
+    thumb = Tool.preview(upDir, fupname, 200, 150); 
+  }
+  
+}    
+
+albumVO.setFname(fname);
+albumVO.setFupname(fupname);
+albumVO.setThumb(thumb);
+albumVO.setFsize(fsize);
+// -------------------------------------------------------------------
+// 파일 전송 코드 종료
+// -------------------------------------------------------------------
+
+int cnt = this.albumProc.create_join(albumVO); // 등록 처리
+
+mav.addObject("cnt", cnt); // request에 저장, request.setAttribute("cnt", cnt)
+mav.addObject("url", "/album/create_join_msg");
+
+mav.addObject("albumno", albumVO.getAlbumno());
+mav.addObject("title", albumVO.getTitle());
+
+
+
+
+mav.setViewName("redirect:/album/msg.do"); // /webapp/WEB-INF/views/artist/create_msg.jsp
+/*
+ * // cnt = 0; // error test if (cnt == 1) {
+ * mav.setViewName("redirect:/artist/list.do"); } else { mav.addObject("code",
+ * "create"); // request에 저장, request.setAttribute("cnt", cnt)
+ * mav.setViewName("/artist/error_msg"); // /WEB-INF/views/artist/error_msg.jsp
+ * }
+ */
+
+
+return mav; // forward
+}
+
 /**
  * 전체 목록
  * http://localhost:9091/album/list_all.do 
@@ -334,7 +427,7 @@ public ModelAndView list_all_join() {
     return json.toString();
   }
   
-//http://localhost:9091/album/read.do
+ //http://localhost:9091/album/read.do
  /**
   * 조회
   * @return
@@ -342,19 +435,26 @@ public ModelAndView list_all_join() {
  @RequestMapping(value="/album/read.do", method=RequestMethod.GET )
  public ModelAndView read(@RequestParam(value = "now_page", defaultValue = "1") int now_page,
                                      @RequestParam(value = "artistno", defaultValue = "1") int artistno,
-                                       int albumno) {
+                                       int albumno, HttpSession session) {
    //public ModelAndView read(int newsno, int now_page) 
    //System.out.println("-> now_page: " + now_page);
    
    ModelAndView mav = new ModelAndView();
    
-   AlbumVO albumVO = this.albumProc.read(albumno);
-   mav.addObject("albumVO", albumVO);
+   if (this.memberProc.isMember(session)) {
+     AlbumVO albumVO = this.albumProc.read(albumno);
+     mav.addObject("albumVO", albumVO);
 
-   ArtistVO artistVO = this.artistProc.read(albumVO.getArtistno()); 
-   mav.addObject("artistVO", artistVO); // request.setAttribute("newsVO", newsVO);
-   
-   mav.setViewName("/album/read"); // /WEB-INF/views/album/read.jsp
+     ArtistVO artistVO = this.artistProc.read(albumVO.getArtistno()); 
+     mav.addObject("artistVO", artistVO); // request.setAttribute("newsVO", newsVO);
+     
+     mav.setViewName("/album/read"); // /WEB-INF/views/album/read.jsp
+     
+   } else {
+     mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
+     
+     mav.setViewName("redirect:/member/msg.do");  
+   }
        
    return mav;
  }

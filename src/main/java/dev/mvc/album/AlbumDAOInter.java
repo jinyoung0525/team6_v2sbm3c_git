@@ -14,6 +14,13 @@ public interface AlbumDAOInter {
   public int create(AlbumVO albumVO);
   
   /**
+   * 조인 등록
+   * @param albumVO
+   * @return 등록된 갯수
+   */
+  public int create_join(AlbumVO albumVO);
+  
+  /**
    *  전체 목록
    * @return
    */

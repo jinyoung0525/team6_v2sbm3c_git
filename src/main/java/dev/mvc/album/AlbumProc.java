@@ -26,6 +26,13 @@ public class AlbumProc implements AlbumProcInter {
     int cnt = this.albumDAO.create(albumVO);
     return cnt;
   }
+  
+  @Override
+  public int create_join(AlbumVO albumVO) {
+    int cnt = this.albumDAO.create_join(albumVO);
+    return cnt;
+  }
+
 
   @Override
   public List<AlbumVO> list_all() {
@@ -258,6 +265,7 @@ public class AlbumProc implements AlbumProcInter {
     return cnt;
   }
 
+  
   
 
 }
