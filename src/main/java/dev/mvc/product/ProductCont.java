@@ -182,16 +182,27 @@ public class ProductCont {
 	* @return
 	*/
 	@RequestMapping(value = "/product/list.do", method = RequestMethod.GET)
-	public ModelAndView list_product_asc() {
+	public ModelAndView list_product_asc(HttpSession session) {
 		  //System.out.println("--> now_page: " + now_page);
+	 
 	  
 
 		ModelAndView mav = new ModelAndView();
-
-	
+		
+		if(session.getAttribute("memberno")==null) {
+		  
+		}else {
+		int memberno = (int) session.getAttribute("memberno");
+		System.out.println(memberno);
+		 List<PayVO> payVO = payProc.read_member(memberno);
+		 mav.addObject("payVO", payVO);
+		}
+		 
 	    List<ProductVO> list = productProc.list_product_asc();
 	    mav.addObject("list", list);
+	    
 
+	    
 	    
 	    	mav.setViewName("/product/list_product_asc");
 	    	
@@ -292,6 +303,7 @@ public class ProductCont {
 	     
 	       
 	       ProductVO productVO = this.productProc.read(product_no);
+	       
 	       //System.out.println(session.getAttribute("id"));
 	       //System.out.println(session);
 	       String partner_order_id ="00001";  //주문번호

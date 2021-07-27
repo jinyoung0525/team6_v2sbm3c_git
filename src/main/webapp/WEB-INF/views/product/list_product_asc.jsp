@@ -74,10 +74,44 @@ function read_update_ajax(categrpno) {
   
 <body>
 <jsp:include page="../menu/top.jsp" />
+
+
+
+<tbody>
+      <c:forEach var="payVO" items="${payVO}">
+        <c:set var="payno" value="${payVO.pay_no }" />
+        <c:set var="name2" value="${payVO.pay_name }" />
+        <c:set var="count2" value="${payVO.pay_count }" />
+        <c:set var="day2" value="${payVO.pay_day}" />
+        
+      </c:forEach>
+      
+    </tbody>
  
 <DIV class='title_line'>
   <A href="../product/list.do" class='title_link'>이용권</A>
-</DIV>
+  
+  
+  <span style="padding-left : 60%">
+  현재 사용중인 이용권 : 
+  <c:choose>
+    <c:when test="${payno > 0}">
+        ${name2}  |  
+        <c:choose>
+        <c:when test="${count2<0}">
+            무제한  |
+        </c:when>
+        <c:otherwise>
+            ${count2 }  |
+        </c:otherwise>
+        </c:choose>
+         ${day2}일 남음
+     </c:when>
+     <c:otherwise>
+     이용권 없음
+     </c:otherwise>
+    </c:choose>
+  </span>
 
 <DIV class='content_body'>
 <sec:authorize access="isAuthenticated()">

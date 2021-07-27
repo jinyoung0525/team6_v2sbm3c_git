@@ -34,6 +34,13 @@ public interface PayDAOInter {
    */
   public PayVO read(int pay_no);
   
+  /**
+   * 회원 조회
+   * @param contentsno
+   * @return
+   */
+  public List<PayVO> read_member(int memberno);
+  
 
   
   

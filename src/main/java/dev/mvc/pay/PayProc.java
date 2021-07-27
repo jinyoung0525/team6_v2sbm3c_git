@@ -173,6 +173,23 @@ import reactor.core.publisher.Mono;
       return payVO;
     }
     
+    
+    
+    @Override
+    public List<PayVO> read_member(int memberno) {
+      List<PayVO> payVO = null;
+      payVO = this.payDAO.read_member(memberno);
+      
+      //String payname = payVO.getPay_name();
+      
+      //payname = Tool.convertChar(payname);  // 특수 문자 처리
+       
+      //payVO.setPay_name(payname);
+      
+      return payVO;
+    }
+    
+    
 	
 	 @Override
 	  public List<PayVO> list_product_asc() {

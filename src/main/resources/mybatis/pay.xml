@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     VALUES(product_seq.nextval, #{pay_name}, #{pay_count}, #{pay_day}, sysdate, #{payment},  #{price}, #{tid}, #{payment_method_type}, TO_DATE(#{created_at}, 'yyyy-mm-dd"T"hh24:mi:ss'), TO_DATE(#{approved_at}, 'yyyy-mm-dd"T"hh24:mi:ss'),#{memberno})
   </insert>
   
-  <select id="list_by_search_paging" resultType="dev.mvc.pay.PayVO">
+  <select id="list_by_search" resultType="dev.mvc.pay.PayVO">
     SELECT pay_no, pay_name, pay_count, pay_day, rdata, payment, price, tid, payment_method_type, created_at, approved_at, memberno
     FROM pay
     ORDER BY pay_no ASC
@@ -21,11 +21,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
   
     
-  <!-- 일반적인 조회 -->
-  <select id="read" resultType="dev.mvc.product.ProductVO" parameterType="int">
+  <!-- 회원이용권 조회 -->
+  <select id="read_member" resultType="dev.mvc.pay.PayVO" parameterType="int">
     SELECT pay_no, pay_name, pay_count, pay_day, rdata, payment, price, tid, payment_method_type, created_at, approved_at, memberno
     FROM pay
-    WHERE pay_no = #{pay_no}
+    WHERE memberno = #{memberno} 
   </select>
   
   <!-- 주문번호생성 -->

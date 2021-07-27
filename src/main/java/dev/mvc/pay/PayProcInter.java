@@ -56,10 +56,21 @@ public interface PayProcInter {
    */
   public PayVO read(int pay_no);
   
+  
+  /**
+   * 회원 조회
+   * @param contentsno
+   * @return
+   */
+  public List<PayVO> read_member(int memberno);
+  
  
   
 //임시
   public List<PayVO> list_product_asc();
+
+
+
 
    
   
