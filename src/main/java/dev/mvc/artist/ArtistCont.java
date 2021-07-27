@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -282,16 +283,27 @@ public ModelAndView list() {
    */
   @RequestMapping(value="/artist/read.do", method=RequestMethod.GET )
   public ModelAndView read(@RequestParam(value = "now_page", defaultValue = "1") int now_page,
-                                        int artistno) {
+                                        int artistno, HttpSession session, Authentication SecurityContextHolder) {
     //public ModelAndView read(int newsno, int now_page) 
     //System.out.println("-> now_page: " + now_page);
     
     ModelAndView mav = new ModelAndView();
     
-    ArtistVO artistVO = this.artistProc.read(artistno); 
-    mav.addObject("artistVO", artistVO); // request.setAttribute("newsVO", newsVO);
+    if (this.memberProc.isMember(session)||SecurityContextHolder!=null) {
+      ArtistVO artistVO = this.artistProc.read(artistno); 
+      mav.addObject("artistVO", artistVO); // request.setAttribute("newsVO", newsVO);
+      
+      mav.setViewName("/artist/read"); // /WEB-INF/views/artist/read.jsp
+      
+    }else {
+      
+      mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
+      
+      mav.setViewName("redirect:/member/msg.do");  
     
-    mav.setViewName("/artist/read"); // /WEB-INF/views/artist/read.jsp
+    }
+    
+    
         
     return mav;
   }

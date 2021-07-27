@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -150,10 +151,10 @@ public class BoardCont {
    * @return
    */
    @RequestMapping(value="/board/read.do", method=RequestMethod.GET)
-   public ModelAndView read(int bnum, HttpSession session) {
+   public ModelAndView read(int bnum, HttpSession session, Authentication SecurityContextHolder) {
      ModelAndView mav = new ModelAndView();
      
-     if (this.memberProc.isMember(session)) {
+     if (this.memberProc.isMember(session)||SecurityContextHolder!=null) {
        BoardVO boardVO = this.boardProc.read(bnum);
        mav.addObject("boardVO", boardVO);
        

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -435,13 +436,13 @@ public ModelAndView list_all_join() {
  @RequestMapping(value="/album/read.do", method=RequestMethod.GET )
  public ModelAndView read(@RequestParam(value = "now_page", defaultValue = "1") int now_page,
                                      @RequestParam(value = "artistno", defaultValue = "1") int artistno,
-                                       int albumno, HttpSession session) {
+                                       int albumno, HttpSession session, Authentication SecurityContextHolder) {
    //public ModelAndView read(int newsno, int now_page) 
    //System.out.println("-> now_page: " + now_page);
    
    ModelAndView mav = new ModelAndView();
    
-   if (this.memberProc.isMember(session)) {
+   if (this.memberProc.isMember(session)||SecurityContextHolder!=null) {
      AlbumVO albumVO = this.albumProc.read(albumno);
      mav.addObject("albumVO", albumVO);
 

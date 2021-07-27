@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -151,28 +152,31 @@ public class NoticeCont {
     }
   
 // http://localhost:9091/board/read.do?bnum=1
-  /**
-   * 조회
-   * @return
-   */
-  @RequestMapping(value="/notice/read.do", method=RequestMethod.GET )
-  public ModelAndView read(int nnum, HttpSession session) {
-    ModelAndView mav = new ModelAndView();
+   /**
+    * 조회
+    * @return
+    */
+   @RequestMapping(value="/notice/read.do", method=RequestMethod.GET )
+   public ModelAndView read(int nnum, HttpSession session, Authentication SecurityContextHolder) {
+     ModelAndView mav = new ModelAndView();
     
-    if (this.memberProc.isMember(session)) {
-      NoticeVO noticeVO = this.noticeProc.read(nnum);
-      mav.addObject("noticeVO", noticeVO); // request.setAttribute("noticeVO", noticeVO);
+     
+     if (this.memberProc.isMember(session)||SecurityContextHolder!=null) {
+       NoticeVO noticeVO = this.noticeProc.read(nnum);
+       mav.addObject("noticeVO", noticeVO); // request.setAttribute("noticeVO", noticeVO);
+       
+       mav.setViewName("/notice/read"); // /WEB-INF/views/notice/read.jsp
+       
+     } else {
       
-      mav.setViewName("/notice/read"); // /WEB-INF/views/notice/read.jsp
-      
-    } else {
-      mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
-      
-      mav.setViewName("redirect:/member/msg.do");  
-    }
-        
-    return mav;
-  }
+       mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
+       
+       mav.setViewName("redirect:/member/msg.do");  
+     
+     }
+         
+     return mav;
+   }
   
   /**
    * 수정 폼
