@@ -334,7 +334,7 @@ public ModelAndView list_all_join() {
     return json.toString();
   }
   
- //http://localhost:9091/album/read.do
+//http://localhost:9091/album/read.do
  /**
   * 조회
   * @return
@@ -342,26 +342,19 @@ public ModelAndView list_all_join() {
  @RequestMapping(value="/album/read.do", method=RequestMethod.GET )
  public ModelAndView read(@RequestParam(value = "now_page", defaultValue = "1") int now_page,
                                      @RequestParam(value = "artistno", defaultValue = "1") int artistno,
-                                       int albumno, HttpSession session) {
+                                       int albumno) {
    //public ModelAndView read(int newsno, int now_page) 
    //System.out.println("-> now_page: " + now_page);
    
    ModelAndView mav = new ModelAndView();
    
-   if (this.memberProc.isMember(session)) {
-     AlbumVO albumVO = this.albumProc.read(albumno);
-     mav.addObject("albumVO", albumVO);
+   AlbumVO albumVO = this.albumProc.read(albumno);
+   mav.addObject("albumVO", albumVO);
 
-     ArtistVO artistVO = this.artistProc.read(albumVO.getArtistno()); 
-     mav.addObject("artistVO", artistVO); // request.setAttribute("newsVO", newsVO);
-     
-     mav.setViewName("/album/read"); // /WEB-INF/views/album/read.jsp
-     
-   } else {
-     mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
-     
-     mav.setViewName("redirect:/member/msg.do");  
-   }
+   ArtistVO artistVO = this.artistProc.read(albumVO.getArtistno()); 
+   mav.addObject("artistVO", artistVO); // request.setAttribute("newsVO", newsVO);
+   
+   mav.setViewName("/album/read"); // /WEB-INF/views/album/read.jsp
        
    return mav;
  }
