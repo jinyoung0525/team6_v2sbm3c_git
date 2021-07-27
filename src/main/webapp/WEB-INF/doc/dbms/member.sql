@@ -51,7 +51,7 @@ WHERE id='user1';
    
 -- 개인 회원 테스트 계정
 INSERT INTO member(memberno, id, passwd, mname, email, tel, zipcode, address1, address2, mdate, grade, authority)
-VALUES (member_seq.nextval, 'user1', '1234', '왕눈이', 'user1@email', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate, 'ROLE_USER');
+VALUES (member_seq.nextval, 'user1', '1234', '왕눈이', 'user1@email', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate, 15, 'ROLE_USER');
  
 INSERT INTO member(memberno, id, passwd, mname, email, tel, zipcode, address1, address2, mdate, grade, authority)
 VALUES (member_seq.nextval, 'user2', '1234', '아로미', 'user1@email', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate, 15, 'ROLE_USER');
