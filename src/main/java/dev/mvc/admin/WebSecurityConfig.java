@@ -38,8 +38,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/album/**").permitAll() 
         // 아티스트
         .antMatchers("/artist/**").permitAll()
+        
         // 공지사항
-        .antMatchers("/notice/**").permitAll() 
+        .antMatchers("/notice/list.do").permitAll()  // 공지사항 목록까지는 모두 허용
+        .antMatchers("/notice/read.do").permitAll() // 공지사항 글 조회부터는 회원과 관리자만 가능
         // 게시판
         .antMatchers("/board/**").permitAll() 
         // 회원가입
