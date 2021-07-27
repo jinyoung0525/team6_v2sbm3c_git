@@ -216,13 +216,6 @@
       </div>
     </div> 
     
-    <div class="form-group">
-      <label for="tel" class="col-md-2 control-label" style='font-size: 0.9em;'>닉네임</label>    
-      <div class="col-md-10">
-        <input type='text' class="form-control" name='nickname' id='nickname' 
-                   value='' required="required" style='width: 30%;' placeholder="닉네임">
-      </div>
-    </div>  
 
     <div class="form-group">
       <label for="zipcode" class="col-md-2 control-label" style='font-size: 0.9em;'>우편번호</label>    
