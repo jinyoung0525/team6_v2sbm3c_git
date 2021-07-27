@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.member.MemberProcInter;
 import dev.mvc.notice.NoticeVO;
 import dev.mvc.tool.Tool;
 import dev.mvc.tool.Upload;
@@ -24,6 +26,11 @@ public class BoardCont {
   @Autowired
   @Qualifier("dev.mvc.board.BoardProc")
   private BoardProcInter boardProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.member.MemberProc")
+  private MemberProcInter memberProc;
+  
   
   public BoardCont() {
     System.out.println("-> BoardCont created.");
@@ -143,13 +150,19 @@ public class BoardCont {
    * @return
    */
    @RequestMapping(value="/board/read.do", method=RequestMethod.GET)
-   public ModelAndView read(int bnum) {
+   public ModelAndView read(int bnum, HttpSession session) {
      ModelAndView mav = new ModelAndView();
      
-     BoardVO boardVO = this.boardProc.read(bnum);
-     mav.addObject("boardVO", boardVO);
-     
-     mav.setViewName("/board/read");
+     if (this.memberProc.isMember(session)) {
+       BoardVO boardVO = this.boardProc.read(bnum);
+       mav.addObject("boardVO", boardVO);
+       
+       mav.setViewName("/board/read");
+     } else {
+       mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
+       
+       mav.setViewName("redirect:/member/msg.do");
+     }
      return mav;
    }
   

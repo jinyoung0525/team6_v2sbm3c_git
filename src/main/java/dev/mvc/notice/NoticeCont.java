@@ -32,11 +32,7 @@ public class NoticeCont {
   @Autowired
   @Qualifier("dev.mvc.member.MemberProc")
   private MemberProcInter memberProc;
-  
-  
 
- 
-  
   public NoticeCont() {
     System.out.println("-> NoticeCont created.");
   }
@@ -169,13 +165,7 @@ public class NoticeCont {
       
       mav.setViewName("/notice/read"); // /WEB-INF/views/notice/read.jsp
       
-    } else if(this.memberProc.isAdmin(session)) {
-      NoticeVO noticeVO = this.noticeProc.read(nnum);
-      mav.addObject("noticeVO", noticeVO); // request.setAttribute("noticeVO", noticeVO);
-      
-      mav.setViewName("/notice/read"); // /WEB-INF/views/notice/read.jsp
-      
-    }else {
+    } else {
       mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
       
       mav.setViewName("redirect:/member/msg.do");  

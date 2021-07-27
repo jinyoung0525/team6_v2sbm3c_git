@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.member.MemberProcInter;
 import dev.mvc.tool.Tool;
 import dev.mvc.tool.Upload;
 
@@ -24,6 +26,11 @@ public class ArtistCont {
   @Autowired
   @Qualifier("dev.mvc.artist.ArtistProc")
   private ArtistProcInter artistProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.member.MemberProc")
+  private MemberProcInter memberProc;
+
   
   public ArtistCont() {
     System.out.println("-> ArtistCont created");
@@ -275,16 +282,22 @@ public ModelAndView list() {
    */
   @RequestMapping(value="/artist/read.do", method=RequestMethod.GET )
   public ModelAndView read(@RequestParam(value = "now_page", defaultValue = "1") int now_page,
-                                        int artistno) {
+                                        int artistno, HttpSession session) {
     //public ModelAndView read(int newsno, int now_page) 
     //System.out.println("-> now_page: " + now_page);
     
     ModelAndView mav = new ModelAndView();
-
-    ArtistVO artistVO = this.artistProc.read(artistno); 
-    mav.addObject("artistVO", artistVO); // request.setAttribute("newsVO", newsVO);
     
-    mav.setViewName("/artist/read"); // /WEB-INF/views/artist/read.jsp
+    if (this.memberProc.isMember(session)) {
+      ArtistVO artistVO = this.artistProc.read(artistno); 
+      mav.addObject("artistVO", artistVO); // request.setAttribute("newsVO", newsVO);
+      
+      mav.setViewName("/artist/read"); // /WEB-INF/views/artist/read.jsp
+    } else {
+      mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
+      
+      mav.setViewName("redirect:/member/msg.do");  
+    }
         
     return mav;
   }

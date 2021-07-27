@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <update id="update" parameterType="dev.mvc.member.MemberVO">
     UPDATE member 
-    SET mname=#{mname}, tel=#{tel}, zipcode=#{zipcode}, address1=#{address1}, address2={#address2}
+    SET mname=#{mname}, tel=#{tel}, zipcode=#{zipcode}, address1=#{address1}, address2=#{address2}
     WHERE memberno=#{memberno}
   </update>
   
