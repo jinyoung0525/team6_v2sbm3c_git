@@ -159,17 +159,10 @@ public class NoticeCont {
   public ModelAndView read(int nnum, HttpSession session) {
     ModelAndView mav = new ModelAndView();
     
-    if (this.memberProc.isMember(session)) {
       NoticeVO noticeVO = this.noticeProc.read(nnum);
       mav.addObject("noticeVO", noticeVO); // request.setAttribute("noticeVO", noticeVO);
       
       mav.setViewName("/notice/read"); // /WEB-INF/views/notice/read.jsp
-      
-    } else {
-      mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
-      
-      mav.setViewName("redirect:/member/msg.do");     
-    }
         
     return mav;
   }
