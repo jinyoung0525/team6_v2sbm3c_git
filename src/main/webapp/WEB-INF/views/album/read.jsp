@@ -132,8 +132,8 @@ function update_likey_ajax(albumno) {
             <span style="font-size: 1.0em;">앨범 종류: ${kind }</span><br>
             <span style="font-size: 1.0em;">발매일: ${release }</span><br>
             <span style="font-size: 1.0em;">장르: ${genre }</span><br>
-            <span style="font-size: 1.0em;">기획사: ${enter }</span><br>
-            <span style="font-size: 1.8em;"><a href='../music/list_by_albumno_search_paging.do?albumno=${param.albumno }&word=&now_page=1'>수록곡 바로가기</a></span><br>
+            <span style="font-size: 1.0em;">기획사: ${enter }</span><br><br>
+            <span style="font-size: 2.0em; font-weight: bold"><a href='../music/list_by_albumno_search_paging.do?albumno=${param.albumno }&word=&now_page=1'  style='font-size:1.0em;'>『수록곡 바로가기』</a></span><br>
           </DIV> 
         </c:if> 
         <DIV><strong>${intro }</strong></DIV><br>
