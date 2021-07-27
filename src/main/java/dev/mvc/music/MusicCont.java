@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import dev.mvc.album.AlbumProcInter;
 import dev.mvc.album.AlbumVO;
 import dev.mvc.artist.ArtistProcInter;
 import dev.mvc.artist.ArtistVO;
-
+import dev.mvc.member.MemberProcInter;
 import dev.mvc.tool.Tool;
 import dev.mvc.tool.Upload;
 
@@ -37,6 +38,10 @@ public class MusicCont {
   @Autowired
   @Qualifier("dev.mvc.music.MusicProc")
   private MusicProcInter musicProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.member.MemberProc")
+  private MemberProcInter memberProc;
   
   public MusicCont() {
     System.out.println("-> MusicCont created.");
@@ -341,19 +346,25 @@ public class MusicCont {
    @RequestMapping(value="/music/read.do", method=RequestMethod.GET )
    public ModelAndView read(@RequestParam(value = "now_page", defaultValue = "1") int now_page,
                                        @RequestParam(value = "albumno", defaultValue = "1") int albumno,
-                                       int songno) {
+                                       int songno, HttpSession session) {
      ModelAndView mav = new ModelAndView();
-
-     MusicVO musicVO = this.musicProc.read(songno);
-     mav.addObject("musicVO", musicVO); // request.setAttribute("contentsVO", contentsVO);
-
-     AlbumVO albumVO = this.albumProc.read(musicVO.getAlbumno());
-     mav.addObject("albumVO", albumVO); 
-
-     ArtistVO artistVO = this.artistProc.read(albumVO.getArtistno());
-     mav.addObject("artistVO", artistVO); 
      
-     mav.setViewName("/music/read"); // /WEB-INF/views/contents/read.jsp
+     if (this.memberProc.isMember(session)) {
+       MusicVO musicVO = this.musicProc.read(songno);
+       mav.addObject("musicVO", musicVO); // request.setAttribute("contentsVO", contentsVO);
+
+       AlbumVO albumVO = this.albumProc.read(musicVO.getAlbumno());
+       mav.addObject("albumVO", albumVO); 
+
+       ArtistVO artistVO = this.artistProc.read(albumVO.getArtistno());
+       mav.addObject("artistVO", artistVO); 
+       
+       mav.setViewName("/music/read"); // /WEB-INF/views/contents/read.jsp
+     } else {
+       mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
+       
+       mav.setViewName("redirect:/member/msg.do");  
+     }
          
      return mav;
    }

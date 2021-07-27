@@ -78,6 +78,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/music/**").permitAll()
         .antMatchers("/music/images/**").permitAll()
         .antMatchers("/music/storage/**").permitAll()
+        .antMatchers("/music/list_all_join.do").permitAll()
+        .antMatchers("/music/list_by_albumno.do").permitAll()
+        .antMatchers("/music/list_all_join.do").permitAll()
+        .antMatchers("/music/list_by_albumno_search.do").permitAll()
+        .antMatchers("/music/list_by_albumno_search_paging.do").permitAll()
+        .antMatchers("/music/update_likey_ajax.do").permitAll()
+        .antMatchers("/music/read.do").permitAll() // 회원, 관리자만
         
         
         // <관리자만 가능>
@@ -100,6 +107,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/member/read.do").hasRole("ADMIN")
         .antMatchers("/member/update.do").hasRole("ADMIN")
         .antMatchers("/member/delete.do").hasRole("ADMIN")
+        // 음악
+        .antMatchers("/music/create.do").hasRole("ADMIN")
+        .antMatchers("/music/update_music.do").hasRole("ADMIN")
+        .antMatchers("/music/delete.do").hasRole("ADMIN")
         
         .antMatchers("/admin/**").hasRole("ADMIN")  // DBMS: ROLE_ADMIN이 선언되어 있어야함.
         .antMatchers("/**/create.do").hasRole("ADMIN")  // DBMS: ROLE_ADMIN이 선언되어 있어야함.
