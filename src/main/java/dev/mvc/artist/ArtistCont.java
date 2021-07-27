@@ -282,22 +282,16 @@ public ModelAndView list() {
    */
   @RequestMapping(value="/artist/read.do", method=RequestMethod.GET )
   public ModelAndView read(@RequestParam(value = "now_page", defaultValue = "1") int now_page,
-                                        int artistno, HttpSession session) {
+                                        int artistno) {
     //public ModelAndView read(int newsno, int now_page) 
     //System.out.println("-> now_page: " + now_page);
     
     ModelAndView mav = new ModelAndView();
     
-    if (this.memberProc.isMember(session)) {
-      ArtistVO artistVO = this.artistProc.read(artistno); 
-      mav.addObject("artistVO", artistVO); // request.setAttribute("newsVO", newsVO);
-      
-      mav.setViewName("/artist/read"); // /WEB-INF/views/artist/read.jsp
-    } else {
-      mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
-      
-      mav.setViewName("redirect:/member/msg.do");  
-    }
+    ArtistVO artistVO = this.artistProc.read(artistno); 
+    mav.addObject("artistVO", artistVO); // request.setAttribute("newsVO", newsVO);
+    
+    mav.setViewName("/artist/read"); // /WEB-INF/views/artist/read.jsp
         
     return mav;
   }
