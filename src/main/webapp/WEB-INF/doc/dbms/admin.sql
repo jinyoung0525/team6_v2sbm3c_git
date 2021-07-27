@@ -41,7 +41,6 @@ INSERT INTO admin(adminno, id, name, email, password, authority, enabled, rdate,
 VALUES(admin_seq.nextval, 'admin2', '이병헌', 'admin2@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_ADMIN', 1, sysdate, 1);
 INSERT INTO admin(adminno, id, name, email, password, authority, enabled, rdate, grade)
 VALUES(admin_seq.nextval, 'admin3', '변요한', 'admin3@email', '$2a$10$AVq05lsMMJbO7jBJMUCjo.VAQlWRnSLt5VUhhR5.EHPoS5CvYNB5W', 'ROLE_ADMIN', 1, sysdate, 1);
-
 -- 2. 목록
 SELECT adminno, id, name, email, password, authority, enabled, rdate
 FROM admin
@@ -64,7 +63,8 @@ FROM admin
 WHERE id = 'admin1';
 
 -- 4. 삭제
-DELETE FROM admin;
+DELETE FROM admin
+WHERE adminno=4;
 
 COMMIT;
   

@@ -13,8 +13,7 @@ CREATE TABLE member(
     address1 VARCHAR(80), -- 주소 1
     address2 VARCHAR(50), -- 주소 2
     mdate DATE NOT NULL, -- 가입일    
-    grade NUMBER(2) NOT NULL, -- 등급(1 ~ 10: 관리자 / 11~20: 회원 / 30~39: 정지 회원 / 40~49: 탈퇴 회원 / 99: 비회원)
-    authority VARCHAR(20) NOT NULL -- 권한, ROLE_USER 지정됨 ★
+    grade NUMBER(2) NOT NULL-- 등급(1 ~ 10: 관리자 / 11~20: 회원 / 30~39: 정지 회원 / 40~49: 탈퇴 회원 / 99: 비회원)
 );
 
 COMMENT ON TABLE MEMBER is '회원';
@@ -29,7 +28,6 @@ COMMENT ON COLUMN MEMBER.address1 is '주소1';
 COMMENT ON COLUMN MEMBER.address2 is '주소2';
 COMMENT ON COLUMN MEMBER.mdate is '가입일';
 COMMENT ON COLUMN MEMBER.grade is '등급';
-COMMENT ON COLUMN admin.authority is '권한, ROLE_USER 지정됨';
 
 DROP SEQUENCE member_seq;
 CREATE SEQUENCE member_seq
@@ -50,14 +48,14 @@ WHERE id='user1';
    0   ← 중복 되지 않음.
    
 -- 개인 회원 테스트 계정
-INSERT INTO member(memberno, id, passwd, mname, email, tel, zipcode, address1, address2, mdate, grade, authority)
-VALUES (member_seq.nextval, 'user1', '1234', '왕눈이', 'user1@email', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate, 15, 'ROLE_USER');
+INSERT INTO member(memberno, id, passwd, mname, email, tel, zipcode, address1, address2, mdate, grade)
+VALUES (member_seq.nextval, 'user1', '1234', '왕눈이', 'user1@email', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate, 15);
  
-INSERT INTO member(memberno, id, passwd, mname, email, tel, zipcode, address1, address2, mdate, grade, authority)
-VALUES (member_seq.nextval, 'user2', '1234', '아로미', 'user1@email', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate, 15, 'ROLE_USER');
+INSERT INTO member(memberno, id, passwd, mname, email, tel, zipcode, address1, address2, mdate, grade)
+VALUES (member_seq.nextval, 'user2', '1234', '아로미', 'user1@email', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate, 15);
  
-INSERT INTO member(memberno, id, passwd, mname, email, tel, zipcode, address1, address2, mdate, grade, authority)
-VALUES (member_seq.nextval, 'user3', '1234', '투투투', 'user1@email', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate, 15, 'ROLE_USER');
+INSERT INTO member(memberno, id, passwd, mname, email, tel, zipcode, address1, address2, mdate, grade)
+VALUES (member_seq.nextval, 'user3', '1234', '투투투', 'user1@email', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate, 15);
 
 -- 2. 목록
 -- 검색을 하지 않는 경우, 전체 목록 출력
