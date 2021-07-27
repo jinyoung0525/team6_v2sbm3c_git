@@ -93,7 +93,7 @@ function Kpay() {
     <span class='menu_divide' >│</span>
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>
-    <A href="./product/delete.do">상품삭제</A>
+    <A href="./delete.do?product_no=${param.product_no}">상품삭제</A>
   </ASIDE>
   </sec:authorize>
 	

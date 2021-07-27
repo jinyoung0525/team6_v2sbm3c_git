@@ -411,12 +411,12 @@ public class ProductCont {
      }
 
      
-     /**
+	   /**
       * 삭제 처리 http://localhost:9091/contents/delete.do
       * 
       * @return
       */
-     @RequestMapping(value = "/product/delete.do", method = RequestMethod.POST)
+     @RequestMapping(value = "/product/delete.do", method = RequestMethod.GET)
      public ModelAndView delete(int product_no) {
        ModelAndView mav = new ModelAndView();
 
