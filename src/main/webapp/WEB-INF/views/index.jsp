@@ -20,8 +20,7 @@
 <jsp:include page="./menu/top.jsp" flush='false' />
   
   <DIV style='width: 100%; margin: 30px auto; text-align: center;'>
-    <%-- /static/images/resort01.jpg --%>
-    <IMG src='/images/Music_main.jpg' style='width: 50%;'>
+    <IMG src='/images/main1.jpg' style='width: 100%;'>
   </DIV>
   
   <DIV style='margin: 0px auto; width: 90%;'>

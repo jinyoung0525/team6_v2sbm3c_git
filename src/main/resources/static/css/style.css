@@ -1,7 +1,7 @@
-  /* ver 2.0 */
+ /* ver 2.0 */
   /* 모든 태그에 적용 */
   *{
-     font-family: Malgun Gothic; 
+     font-family: Arial; 
      font-size: 16px; 
      margin: 0px;  /* top right bottom left */
      padding: 0px;
@@ -16,27 +16,27 @@
   /* 이미지 사용시 경로 지정
   /css/images/top_image_1920.jpg
   Spring Boot: /static/css/images/top_image_1920.jpg
-  */
+
   .top_img {
     width: 100%;
     height: 100px;
     background-image: url('/css/images/Music_top.jpg');
-  }
+  }  */
   
   .top_menu_label {
     position: relative; /* 속해 있는 부모 태그 기준 설정 */
     top: 1%;
     left: 0.5%;
-    color: #FFFFFF;
+    color: #555555;
   }
   
   .top_menu {
     position: relative; /* 부모 태그 기준, 화면 상단 기준*/
     top: 50%; 
-    background-color: rgba(50, 50, 255, 0.3);  /* 0.3: Alpha, 투명도 */  
-    color: white;
-    padding-left: 10px; 
-    height: 25px;
+    background-color: white;  /* 0.3: Alpha, 투명도 */  
+    color: #555555;
+    padding-left: 0px; 
+    height: 100px;
   }
   
   /* 화면 상단 메뉴 세로 구분선
@@ -447,7 +447,3 @@
     float: left; 
     font-size: 1.5em;
   }
-  
-    
-  
-  
