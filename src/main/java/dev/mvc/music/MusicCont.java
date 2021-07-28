@@ -749,7 +749,7 @@ return mav; // forward
          
        }else{   //이용권있을때
          
-         PayVO product = payVO.get(1);
+         PayVO product = payVO.get(0);
          int count = product.getPay_count();
          
          if(count==0) {  //이용권만료
