@@ -21,8 +21,7 @@
             <A href='/member/login.do'>Login</A>
           </c:when>
           <c:otherwise>
-          ${sessionScope.id } <A class='menu_link'
-              href='/member/logout.do'>Logout </A>
+          ${sessionScope.id } <A href='/member/logout.do'>Logout </A>
           </c:otherwise>
         </c:choose> ]
         <span class='top_menu_sep'></span>
