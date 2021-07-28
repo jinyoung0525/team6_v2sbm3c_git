@@ -1,9 +1,12 @@
 package dev.mvc.music;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
@@ -23,6 +26,8 @@ import dev.mvc.album.AlbumVO;
 import dev.mvc.artist.ArtistProcInter;
 import dev.mvc.artist.ArtistVO;
 import dev.mvc.member.MemberProcInter;
+import dev.mvc.pay.PayProcInter;
+import dev.mvc.pay.PayVO;
 import dev.mvc.tool.Tool;
 import dev.mvc.tool.Upload;
 
@@ -43,6 +48,10 @@ public class MusicCont {
   @Autowired
   @Qualifier("dev.mvc.member.MemberProc")
   private MemberProcInter memberProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.pay.PayProc")
+  private PayProcInter payProc;
   
   public MusicCont() {
     System.out.println("-> MusicCont created.");
@@ -297,15 +306,87 @@ return mav; // forward
     * Album + Music join, 연결 목록
     * http://localhost:9091/music/list_all_join.do 
     * @return
+   * @throws IOException 
     */
    @RequestMapping(value="/music/list_all_join.do", method=RequestMethod.GET )
-   public ModelAndView list_all_join() {
+   public ModelAndView list_all_join(HttpSession session, HttpServletResponse response, Authentication SecurityContextHolder) throws IOException {
      ModelAndView mav = new ModelAndView();
      
-     List<MusicVO> list = this.musicProc.list_all_join();
-     mav.addObject("list", list); // request.setAttribute("list", list);
+ if(session.getAttribute("memberno")==null&&SecurityContextHolder==null) { //로그인 안했을때
+       
+       response.setContentType("text/html; charset=UTF-8");
+       
+       PrintWriter out = response.getWriter();
+        
+       out.println("<script>alert('이용권 구매후 이용가능합니다.'); location.href='/product/list.do';</script>");
+        
+       out.flush();
 
-     mav.setViewName("/music/list_all_join"); // /cate/list_all_join.jsp
+       //mav.setViewName("redirect:/member/msg.do"); 
+     }
+     
+     else if(session.getAttribute("memberno")!=null&&SecurityContextHolder==null){ //로그인 했을때
+       int memberno = (int) session.getAttribute("memberno");
+       //System.out.println(memberno);
+       List<PayVO> payVO = payProc.read_member(memberno);
+       System.out.println(payVO.isEmpty());
+       if(payVO.isEmpty()) {   //이용권없을때
+         
+         response.setContentType("text/html; charset=UTF-8");
+         
+         PrintWriter out = response.getWriter();
+          
+         out.println("<script>alert('이용권 구매후 이용가능합니다.'); location.href='/product/list.do';</script>");
+          
+         out.flush();
+         
+         
+         
+       }else{   //이용권있을때
+         
+         PayVO product = payVO.get(0);
+         int count = product.getPay_count();
+         
+         if(count==0) {  //이용권만료
+           
+           response.setContentType("text/html; charset=UTF-8");
+           
+           PrintWriter out = response.getWriter();
+            
+           out.println("<script>alert('기존 이용권이 만료되었습니다. 구매후 이용가능합니다.'); location.href='/product/list.do';</script>");
+            
+           out.flush();
+           
+           
+         }else {  //이용권있을떄
+           
+           List<MusicVO> list = this.musicProc.list_all_join();
+           mav.addObject("list", list); // request.setAttribute("list", list);
+  
+           mav.setViewName("/music/list_all_join"); // /cate/list_all_join.jsp
+    
+        
+           
+           
+         }
+        
+       }
+           
+     }
+     
+     else if(SecurityContextHolder!=null) { // 관리자
+       
+       List<MusicVO> list = this.musicProc.list_all_join();
+       mav.addObject("list", list); // request.setAttribute("list", list);
+
+       mav.setViewName("/music/list_all_join"); // /cate/list_all_join.jsp
+
+   
+     }
+     
+           
+   
+     
      return mav;
    }
 
@@ -315,33 +396,121 @@ return mav; // forward
     * @param albumno
     * @param word
     * @return
+   * @throws IOException 
     */
      @RequestMapping(value = "/music/list_by_albumno_search.do", method = RequestMethod.GET)
-     public ModelAndView list_by_albumno_search(@RequestParam(value="albumno", defaultValue="1") int albumno,
-                                                                     @RequestParam(value="word", defaultValue="") String word ) {
+     public ModelAndView list_by_albumno_search(HttpSession session, HttpServletResponse response, Authentication SecurityContextHolder,
+                                                                     @RequestParam(value="albumno", defaultValue="1") int albumno,
+                                                                     @RequestParam(value="word", defaultValue="") String word ) throws IOException {
      
      ModelAndView mav = new ModelAndView(); 
+     
+     
+
+     if(session.getAttribute("memberno")==null&&SecurityContextHolder==null) { //로그인 안했을때
+       
+       response.setContentType("text/html; charset=UTF-8");
+       
+       PrintWriter out = response.getWriter();
+        
+       out.println("<script>alert('이용권 구매후 이용가능합니다.'); location.href='/product/list.do';</script>");
+        
+       out.flush();
+
+       //mav.setViewName("redirect:/member/msg.do"); 
+     }
+     
+     else if(session.getAttribute("memberno")!=null&&SecurityContextHolder==null){ //로그인 했을때
+       int memberno = (int) session.getAttribute("memberno");
+       //System.out.println(memberno);
+       List<PayVO> payVO = payProc.read_member(memberno);
+       System.out.println(payVO.isEmpty());
+       if(payVO.isEmpty()) {   //이용권없을때
+         
+         response.setContentType("text/html; charset=UTF-8");
+         
+         PrintWriter out = response.getWriter();
           
-     // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용 
-     HashMap<String, Object> map = new HashMap<String, Object>(); 
-     map.put("albumno", albumno); // #{cateno}
-     map.put("word", word); // #{word}
+         out.println("<script>alert('이용권 구매후 이용가능합니다.'); location.href='/product/list.do';</script>");
+          
+         out.flush();
+         
+         
+         
+       }else{   //이용권있을때
+         
+         PayVO product = payVO.get(0);
+         int count = product.getPay_count();
+         
+         if(count==0) {  //이용권만료
+           
+           response.setContentType("text/html; charset=UTF-8");
+           
+           PrintWriter out = response.getWriter();
+            
+           out.println("<script>alert('기존 이용권이 만료되었습니다. 구매후 이용가능합니다.'); location.href='/product/list.do';</script>");
+            
+           out.flush();
+           
+           
+         }else {  //이용권있을떄
+           
+           
+        // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용 
+           HashMap<String, Object> map = new HashMap<String, Object>(); 
+           map.put("albumno", albumno); // #{cateno}
+           map.put("word", word); // #{word}
+           
+           // 검색 목록 
+           List<MusicVO> list = musicProc.list_by_albumno_search(map);
+           mav.addObject("list", list);
+           
+           // 검색된 레코드 갯수 
+           int search_count = musicProc.search_count(map);
+           mav.addObject("search_count", search_count);
+           
+           AlbumVO albumVO = albumProc.read(albumno); 
+           mav.addObject("albumVO", albumVO);
+           
+           ArtistVO artistVO = this.artistProc.read(albumVO.getArtistno());
+           mav.addObject("artistVO", artistVO);
+           
+           mav.setViewName("/music/list_by_albumno_search");   // /contents/list_by_cateno_search.jsp
+           
+           
+         }
+        
+       }
+           
+     }
      
-     // 검색 목록 
-     List<MusicVO> list = musicProc.list_by_albumno_search(map);
-     mav.addObject("list", list);
+     else if(SecurityContextHolder!=null) { // 관리자
+       
+    // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용 
+       HashMap<String, Object> map = new HashMap<String, Object>(); 
+       map.put("albumno", albumno); // #{cateno}
+       map.put("word", word); // #{word}
+       
+       // 검색 목록 
+       List<MusicVO> list = musicProc.list_by_albumno_search(map);
+       mav.addObject("list", list);
+       
+       // 검색된 레코드 갯수 
+       int search_count = musicProc.search_count(map);
+       mav.addObject("search_count", search_count);
+       
+       AlbumVO albumVO = albumProc.read(albumno); 
+       mav.addObject("albumVO", albumVO);
+       
+       ArtistVO artistVO = this.artistProc.read(albumVO.getArtistno());
+       mav.addObject("artistVO", artistVO);
+       
+       mav.setViewName("/music/list_by_albumno_search");   // /contents/list_by_cateno_search.jsp
+       
+     }
+
      
-     // 검색된 레코드 갯수 
-     int search_count = musicProc.search_count(map);
-     mav.addObject("search_count", search_count);
-     
-     AlbumVO albumVO = albumProc.read(albumno); 
-     mav.addObject("albumVO", albumVO);
-     
-     ArtistVO artistVO = this.artistProc.read(albumVO.getArtistno());
-     mav.addObject("artistVO", artistVO);
-     
-     mav.setViewName("/music/list_by_albumno_search");   // /contents/list_by_cateno_search.jsp
+
      
      return mav; 
    }
@@ -354,54 +523,157 @@ return mav; // forward
     * @param word
     * @param now_page
     * @return
+   * @throws IOException 
     */
    @RequestMapping(value = "/music/list_by_albumno_search_paging.do", method = RequestMethod.GET)
-   public ModelAndView list_by_albumno_search_paging(
+   public ModelAndView list_by_albumno_search_paging(HttpSession session, HttpServletResponse response, Authentication SecurityContextHolder,
        @RequestParam(value = "albumno", defaultValue = "1") int albumno,
        @RequestParam(value = "word", defaultValue = "") String word,
        @RequestParam(value = "now_page", defaultValue = "1") int now_page,
-       HttpServletRequest request) {
+       HttpServletRequest request) throws IOException {
      System.out.println("--> now_page: " + now_page);
 
      ModelAndView mav = new ModelAndView();
+     
+     if(session.getAttribute("memberno")==null&&SecurityContextHolder==null) { //로그인 안했을때
+       
+       response.setContentType("text/html; charset=UTF-8");
+       
+       PrintWriter out = response.getWriter();
+        
+       out.println("<script>alert('이용권 구매후 이용가능합니다.'); location.href='/product/list.do';</script>");
+        
+       out.flush();
 
-     // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용
-     HashMap<String, Object> map = new HashMap<String, Object>();
-     map.put("albumno", albumno); // #{cateno}
-     map.put("word", word); // #{word}
-     map.put("now_page", now_page); // 페이지에 출력할 레코드의 범위를 산출하기위해 사용
+       //mav.setViewName("redirect:/member/msg.do"); 
+     }else if(session.getAttribute("memberno")!=null&&SecurityContextHolder==null){
+       int memberno = (int) session.getAttribute("memberno");
+       //System.out.println(memberno);
+       List<PayVO> payVO = payProc.read_member(memberno);
+       System.out.println(payVO.isEmpty());
+       if(payVO.isEmpty()) {   //이용권없을때
+         
+         response.setContentType("text/html; charset=UTF-8");
+         
+         PrintWriter out = response.getWriter();
+          
+         out.println("<script>alert('이용권 구매후 이용가능합니다.'); location.href='/product/list.do';</script>");
+          
+         out.flush();
+         
+         
+         
+       }else{   //이용권있을때
+         
+         PayVO product = payVO.get(0);
+         int count = product.getPay_count();
+         
+         if(count==0) {  //이용권만료
+           
+           response.setContentType("text/html; charset=UTF-8");
+           
+           PrintWriter out = response.getWriter();
+            
+           out.println("<script>alert('기존 이용권이 만료되었습니다. 구매후 이용가능합니다.'); location.href='/product/list.do';</script>");
+            
+           out.flush();
+           
+           
+         }else{  //이용권있을떄 or 관리자
+           
+           
+        // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용
+           HashMap<String, Object> map = new HashMap<String, Object>();
+           map.put("albumno", albumno); // #{cateno}
+           map.put("word", word); // #{word}
+           map.put("now_page", now_page); // 페이지에 출력할 레코드의 범위를 산출하기위해 사용
 
-     // 검색 목록
-     List<MusicVO> list = musicProc.list_by_albumno_search_paging(map);
-     mav.addObject("list", list);
+           // 검색 목록
+           List<MusicVO> list = musicProc.list_by_albumno_search_paging(map);
+           mav.addObject("list", list);
 
-     // 검색된 레코드 갯수
-     int search_count = musicProc.search_count(map);
-     mav.addObject("search_count", search_count);
+           // 검색된 레코드 갯수
+           int search_count = musicProc.search_count(map);
+           mav.addObject("search_count", search_count);
 
-     AlbumVO albumVO = albumProc.read(albumno);
-     mav.addObject("albumVO", albumVO);
+           AlbumVO albumVO = albumProc.read(albumno);
+           mav.addObject("albumVO", albumVO);
 
-     ArtistVO artistVO = artistProc.read(albumVO.getArtistno());
-     mav.addObject("artistVO", artistVO);
+           ArtistVO artistVO = artistProc.read(albumVO.getArtistno());
+           mav.addObject("artistVO", artistVO);
 
-     /*
-      * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 현재 페이지: 11 / 22 [이전] 11 12 13 14 15 16 17
-      * 18 19 20 [다음]
-      * @param list_file 목록 파일명
-      * @param cateno 카테고리번호
-      * @param search_count 검색(전체) 레코드수
-      * @param now_page 현재 페이지
-      * @param word 검색어
-      * @return 페이징 생성 문자열
-      */
-     String paging = musicProc.pagingBox("list_by_albumno_search_paging.do", albumno, search_count, now_page, word);
-     mav.addObject("paging", paging);
+           /*
+            * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 현재 페이지: 11 / 22 [이전] 11 12 13 14 15 16 17
+            * 18 19 20 [다음]
+            * @param list_file 목록 파일명
+            * @param cateno 카테고리번호
+            * @param search_count 검색(전체) 레코드수
+            * @param now_page 현재 페이지
+            * @param word 검색어
+            * @return 페이징 생성 문자열
+            */
+           String paging = musicProc.pagingBox("list_by_albumno_search_paging.do", albumno, search_count, now_page, word);
+           mav.addObject("paging", paging);
 
-     mav.addObject("now_page", now_page);
+           mav.addObject("now_page", now_page);
 
-     // /contents/list_by_cateno_table_img1_search_paging.jsp
-     mav.setViewName("/music/list_by_albumno_search_paging");
+           // /contents/list_by_cateno_table_img1_search_paging.jsp
+           mav.setViewName("/music/list_by_albumno_search_paging");
+           
+           
+         }
+        
+       }
+           
+     } else if(SecurityContextHolder!=null) {
+       
+    // 숫자와 문자열 타입을 저장해야함으로 Obejct 사용
+       HashMap<String, Object> map = new HashMap<String, Object>();
+       map.put("albumno", albumno); // #{cateno}
+       map.put("word", word); // #{word}
+       map.put("now_page", now_page); // 페이지에 출력할 레코드의 범위를 산출하기위해 사용
+
+       // 검색 목록
+       List<MusicVO> list = musicProc.list_by_albumno_search_paging(map);
+       mav.addObject("list", list);
+
+       // 검색된 레코드 갯수
+       int search_count = musicProc.search_count(map);
+       mav.addObject("search_count", search_count);
+
+       AlbumVO albumVO = albumProc.read(albumno);
+       mav.addObject("albumVO", albumVO);
+
+       ArtistVO artistVO = artistProc.read(albumVO.getArtistno());
+       mav.addObject("artistVO", artistVO);
+
+       /*
+        * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 현재 페이지: 11 / 22 [이전] 11 12 13 14 15 16 17
+        * 18 19 20 [다음]
+        * @param list_file 목록 파일명
+        * @param cateno 카테고리번호
+        * @param search_count 검색(전체) 레코드수
+        * @param now_page 현재 페이지
+        * @param word 검색어
+        * @return 페이징 생성 문자열
+        */
+       String paging = musicProc.pagingBox("list_by_albumno_search_paging.do", albumno, search_count, now_page, word);
+       mav.addObject("paging", paging);
+
+       mav.addObject("now_page", now_page);
+
+       // /contents/list_by_cateno_table_img1_search_paging.jsp
+       mav.setViewName("/music/list_by_albumno_search_paging");
+       
+     }
+     
+
+     
+     
+     
+     
+     
+     
 
      return mav;
    }
@@ -435,14 +707,83 @@ return mav; // forward
    /**
     * 조회
     * @return
+   * @throws IOException 
     */
    @RequestMapping(value="/music/read.do", method=RequestMethod.GET )
    public ModelAndView read(@RequestParam(value = "now_page", defaultValue = "1") int now_page,
                                        @RequestParam(value = "albumno", defaultValue = "1") int albumno,
-                                       int songno, HttpSession session, Authentication SecurityContextHolder) {
+                                       int songno, HttpSession session, Authentication SecurityContextHolder,
+                                       HttpServletResponse response) throws IOException {
      ModelAndView mav = new ModelAndView();
      
-     if (this.memberProc.isMember(session)||SecurityContextHolder!=null) {
+     
+     
+
+     if(session.getAttribute("memberno")==null&&SecurityContextHolder==null) { //로그인 안했을때
+       
+       response.setContentType("text/html; charset=UTF-8");
+       
+       PrintWriter out = response.getWriter();
+        
+       out.println("<script>alert('이용권 구매후 이용가능합니다.'); location.href='/product/list.do';</script>");
+        
+       out.flush();
+
+       //mav.setViewName("redirect:/member/msg.do"); 
+     }else if(session.getAttribute("memberno")!=null&&SecurityContextHolder==null) {
+       int memberno = (int) session.getAttribute("memberno");
+       //System.out.println(memberno);
+       List<PayVO> payVO = payProc.read_member(memberno);
+       System.out.println(payVO.isEmpty());
+       if(payVO.isEmpty()) {   //이용권없을때
+         
+         response.setContentType("text/html; charset=UTF-8");
+         
+         PrintWriter out = response.getWriter();
+          
+         out.println("<script>alert('이용권 구매후 이용가능합니다.'); location.href='/product/list.do';</script>");
+          
+         out.flush();
+         
+         
+         
+       }else{   //이용권있을때
+         
+         PayVO product = payVO.get(1);
+         int count = product.getPay_count();
+         
+         if(count==0) {  //이용권만료
+           
+           response.setContentType("text/html; charset=UTF-8");
+           
+           PrintWriter out = response.getWriter();
+            
+           out.println("<script>alert('기존 이용권이 만료되었습니다. 구매후 이용가능합니다.'); location.href='/product/list.do';</script>");
+            
+           out.flush();
+           
+           
+         }else{  //이용권있을떄 or 관리자
+           
+           
+           MusicVO musicVO = this.musicProc.read(songno);
+           mav.addObject("musicVO", musicVO); // request.setAttribute("contentsVO", contentsVO);
+
+           AlbumVO albumVO = this.albumProc.read(musicVO.getAlbumno());
+           mav.addObject("albumVO", albumVO); 
+
+           ArtistVO artistVO = this.artistProc.read(albumVO.getArtistno());
+           mav.addObject("artistVO", artistVO); 
+           
+           mav.setViewName("/music/read"); // /WEB-INF/views/contents/read.jsp
+
+         }
+        
+       }
+           
+     }
+     else if(SecurityContextHolder!=null) { //관리자
+       
        MusicVO musicVO = this.musicProc.read(songno);
        mav.addObject("musicVO", musicVO); // request.setAttribute("contentsVO", contentsVO);
 
@@ -453,12 +794,10 @@ return mav; // forward
        mav.addObject("artistVO", artistVO); 
        
        mav.setViewName("/music/read"); // /WEB-INF/views/contents/read.jsp
-     } else {
-       mav.addObject("url", "login_need"); // login_need.jsp, redirect parameter 적용
+
        
-       mav.setViewName("redirect:/member/msg.do");  
      }
-         
+
      return mav;
    }
    
