@@ -343,6 +343,7 @@ public class ProductCont {
    
        String partner_order_id ="00001";
        String partner_user_id = (String) session.getAttribute("id");
+       int memberno = (int) session.getAttribute("memberno");
        
        
        
@@ -363,7 +364,7 @@ public class ProductCont {
        payVO.setPayment_method_type(json.getString("payment_method_type"));
        payVO.setPrice(this.product_price);
        payVO.setTid(tid);
-       payVO.setMemberno(1);
+       payVO.setMemberno(memberno);
        
        System.out.println(json.getString("approved_at"));
        //System.out.println(payVO.getPay_count());
