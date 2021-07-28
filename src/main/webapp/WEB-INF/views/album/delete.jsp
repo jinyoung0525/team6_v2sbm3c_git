@@ -109,6 +109,7 @@
           <FORM name='frm' method='POST' action='./delete.do'>
               <input type="hidden" name="albumno" value='${param.albumno }'> 
               <input type='hidden' name='artistno' value='${artistVO.artistno}'>
+              <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
               
               <DIV id='panel1' style="width: 40%; text-align: center; margin: 10px auto;"></DIV>
                     

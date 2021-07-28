@@ -118,6 +118,7 @@
               enctype="multipart/form-data">
             <input type="hidden" name="artistno" value='${artistVO.artistno }'>
             <input type="hidden" name="albumno" value='${albumno }'>
+            <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
             <div class="form-group">
                <label class="control-label col-md-4">앨범 이름</label>
                <div class="col-md-8">

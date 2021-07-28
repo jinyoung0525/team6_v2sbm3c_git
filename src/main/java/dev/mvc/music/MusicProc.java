@@ -26,6 +26,12 @@ public MusicProc() {
   }
   
   @Override
+  public int create_join(MusicVO musicVO) {
+    int cnt = this.musicDAO.create_join(musicVO);
+    return cnt;
+  }
+
+  @Override
   public List<MusicVO> list_all() {
     List<MusicVO> list = this.musicDAO.list_all();
     return list;

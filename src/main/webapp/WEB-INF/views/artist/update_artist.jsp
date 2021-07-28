@@ -116,6 +116,7 @@
               enctype="multipart/form-data">
             <input type="hidden" name="artistno" value="${artistno }">
             <input type='hidden' name='now_page' value='${param.now_page }'>
+            <input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
             
             <div class="form-group">
                <label class="control-label col-md-4">아티스트 이름</label>

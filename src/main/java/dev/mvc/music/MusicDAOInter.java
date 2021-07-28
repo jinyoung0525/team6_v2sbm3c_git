@@ -15,6 +15,13 @@ public interface MusicDAOInter {
   public int create(MusicVO musicVO);
   
   /**
+   * 조인 등록
+   * @param musicVO
+   * @return 등록된 갯수
+   */
+  public int create_join(MusicVO musicVO);
+  
+  /**
    *  전체 목록
    * @return
    */

@@ -14,6 +14,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      VALUES(#{songno}, #{title}, #{mp3}, #{mp4}, #{size3}, #{size4}, #{seqno}, #{lyrics}, #{likey}, #{albumno}, #{memberno}, #{word})
   </insert>
   
+  <insert id="create_join" parameterType="dev.mvc.music.MusicVO">
+    <selectKey keyProperty="songno" resultType="int" order="BEFORE">
+      SELECT music_seq.nextval FROM dual
+    </selectKey>
+    
+     INSERT INTO music(songno, title, mp3, mp4, size3, size4, seqno, lyrics, likey, albumno, memberno, word)
+     VALUES(#{songno}, #{title}, #{mp3}, #{mp4}, #{size3}, #{size4}, #{seqno}, #{lyrics}, #{likey}, #{albumno}, #{memberno}, #{word})
+  </insert>
+  
    <!-- albumno 별 목록 -->
   <select id="list_by_albumno" resultType="dev.mvc.music.MusicVO" parameterType="int">
    SELECT songno, title, mp3, mp4, size3, size4, seqno, lyrics, likey, albumno, memberno

@@ -68,7 +68,7 @@
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
-    <A href="./create.do?albumno=${param.albumno }">등록</A>
+    <A href="./create_join.do">등록</A>
     <span class='menu_divide' >│</span>
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>
