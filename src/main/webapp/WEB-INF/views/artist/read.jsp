@@ -133,7 +133,8 @@
             <span style="font-size: 1.0em;">유형: ${type }</span><br>
             <span style="font-size: 1.0em;">데뷔: ${debut }</span><br>
             <span style="font-size: 1.0em;">국적: ${nation }</span><br>
-            <span style="font-size: 1.0em;">장르: ${genre }</span><br>
+            <span style="font-size: 1.0em;">장르: ${genre }</span><br><br>
+            <span style="font-size: 2.0em; font-weight: bold"><a href='../album/list_by_artistno_grid.do?artistno=${artistno }'  style='font-size:1.0em;'>『앨범 보기』</a></span><br>      
           </DIV> 
         </c:if> 
         <DIV><%-- ${앨범or음악 목록 jsp include 개발 예정} --%></DIV>
