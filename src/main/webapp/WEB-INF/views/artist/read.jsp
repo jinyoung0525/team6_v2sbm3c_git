@@ -35,6 +35,7 @@
     var params = "";
     // params = $('#frm').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
     params = 'artistno=' + artistno; // 공백이 값으로 있으면 안됨.
+    params += '&${ _csrf.parameterName }=${ _csrf.token }';
     $.ajax(
       {
         url: '/artist/update_fan_ajax.do',
