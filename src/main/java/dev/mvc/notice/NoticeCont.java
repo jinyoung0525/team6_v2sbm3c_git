@@ -130,7 +130,7 @@ public class NoticeCont {
 
     mav.addObject("url", "/notice/create_msg"); // create_msg.jsp, redirect parameter 적용
 
-    mav.setViewName("/notice/create_msg"); 
+    mav.setViewName("redirect:/notice/msg.do");
     
     return mav; // forward
   }
